@@ -6,7 +6,8 @@
 
 ## Team Members
 
-<< List team member names >>
+<< Harry Do 
+Gilbert Kim >>
 
 ***
 
