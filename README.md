@@ -13,7 +13,10 @@ Gilbert Kim >>
 
 ## Project Description
 
-<< Give an overview of your project >>
+<< We are going to make a rhythm game. So first the player will choose the song they liked>
+and difficulty level. Then they get transfer to the game. Where the players have to finish 
+a combo of shuffle button to get the score while listening to their song. The player will against the
+computer. In the end, we will compare the players score with the computer to determine who is the winner.  >>
 
 ***    
 
@@ -31,11 +34,14 @@ Gilbert Kim >>
 
 ### Features
 
-1. << Feature 1 >>
-2. << Feature 2 >>
-3. << Feature 3 >>
-4. << Feature 4 >>
-5. << Feature 5 >>
+1. << Menu screen where users choose their favorite songs and difficulty >>
+2. << Combos of buttons that players have to finish to gain their points >>
+3. << To get the perfect score, the players have to follow wait the point get to the middle of perfect point 
+of the submit bar>>
+4. << Character will move when player got their combos right and stop when they are wrong  >>
+5. << The computer will always get the combo but they choose random coordinate to hit the submit bar 
+. Therefore their score is not always perfect>>
+6. << Losing menu when player score is lower than the NPC  >>
 
 ### Classes
 
