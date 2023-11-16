@@ -11,6 +11,9 @@ screen.fill("white")
 pygame.display.flip()
 pygame.time.wait(1000)
 while RUNNING:
+    w_key=pygame.image.load("final-project-team-hagil/assets/w key.png")
+    screen.blit(w_key,((HEIGHT-1000),WIDTH-100))
+    pygame.display.update()
     for event in pygame.event.get():
         if event.type ==pygame.QUIT:
             RUNNING=False
