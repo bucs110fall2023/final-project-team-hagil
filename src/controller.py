@@ -29,6 +29,7 @@ d_key_after = pygame.image.load("final-project-team-hagil/assets/d key(after).pn
 space_key = w_key = pygame.image.load("final-project-team-hagil/assets/space key.png")
 space_key_after = pygame.image.load("final-project-team-hagil/assets/space key(after).png")
 
+
 screen.blit(w_key, ((SCREEN_HEIGHT-1000), (SCREEN_WIDTH-100)))
 screen.blit(space_key, ((SCREEN_HEIGHT-500), (SCREEN_WIDTH-100)))
 
