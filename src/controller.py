@@ -12,14 +12,19 @@ pygame.display.flip()
 pygame.time.wait(1000)
 w_key=pygame.image.load("final-project-team-hagil/assets/w key.png")
 w_key_after=pygame.image.load("final-project-team-hagil/assets/w key(after).png")
+surface=pygame.Surface([800,400])
+surface.fill("yellow")
+screen.blit(surface,(200,700))
 screen.blit(w_key,((HEIGHT-1000),WIDTH-100))
 pygame.display.update()
 while RUNNING:
+    screen.fill("red")
     for event in pygame.event.get():
             if event.type ==pygame.QUIT:
                 RUNNING=False
             elif event.type==pygame.KEYDOWN:
                 if event.key==pygame.K_w:
+                    screen.blit(surface,(200,700))
                     print("Up")
                     screen.blit(w_key_after,((HEIGHT-1000),WIDTH-100))
                     pygame.time.wait(50)
