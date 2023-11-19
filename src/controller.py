@@ -31,6 +31,9 @@ space_key_after = pygame.image.load("final-project-team-hagil/assets/space key(a
 
 
 screen.blit(w_key, ((SCREEN_HEIGHT-1000), (SCREEN_WIDTH-100)))
+screen.blit(s_key, ((SCREEN_HEIGHT-1000), (SCREEN_WIDTH-100)))
+screen.blit(a_key, ((SCREEN_HEIGHT-1000), (SCREEN_WIDTH-100)))
+screen.blit(d_key, ((SCREEN_HEIGHT-1000), (SCREEN_WIDTH-100)))
 screen.blit(space_key, ((SCREEN_HEIGHT-500), (SCREEN_WIDTH-100)))
 
 pygame.display.update()
@@ -89,4 +92,3 @@ while RUNNING:
             pygame.time.wait(50)
             pygame.display.update()
 
-#hello
