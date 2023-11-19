@@ -14,20 +14,44 @@ pygame.display.flip()
 pygame.time.wait(1000)
 
 
-w_key = pygame.image.load("final-project-team-hagil/assets/w key.png")
-w_key_after = pygame.image.load("final-project-team-hagil/assets/w key(after).png")
+redsky = pygame.image.load("assets/redsky.png").convert()
+redsky_width = redsky.get_width()
+redsky_x = 0
 
-s_key = pygame.image.load("final-project-team-hagil/assets/s key.png")
-s_key_after = pygame.image.load("final-project-team-hagil/assets/s key(after).png")
+sunset = pygame.image.load("assets/sunset.png").convert()
+sunset_width = sunset.get_width()
+sunsetl_x = 0
 
-a_key = pygame.image.load("final-project-team-hagil/assets/a key.png")
-a_key_after = pygame.image.load("final-project-team-hagil/assets/a key(after).png")
+mountain = pygame.image.load("assets/mountain.png").convert()
+mountain_width = mountain.get_width()
+mountain_x = 0
 
-d_key = pygame.image.load("final-project-team-hagil/assets/d key.png")
-d_key_after = pygame.image.load("final-project-team-hagil/assets/d key(after).png")
+nightsky = pygame.image.load("assets/nightsky.png").convert()
+nightsky_width = nightsky.get_width()
+nightsky_x = 0
 
-space_key = pygame.image.load("final-project-team-hagil/assets/space key.png")
-space_key_after = pygame.image.load("final-project-team-hagil/assets/space key(after).png")
+
+clock = pygame.time.Clock()
+FPS = 60
+
+
+tiles = SCREEN_WIDTH / redsky_width
+
+
+w_key = pygame.image.load("assets/w key.png")
+w_key_after = pygame.image.load("assets/w key(after).png")
+
+s_key = pygame.image.load("assets/s key.png")
+s_key_after = pygame.image.load("assets/s key(after).png")
+
+a_key = pygame.image.load("assets/a key.png")
+a_key_after = pygame.image.load("assets/a key(after).png")
+
+d_key = pygame.image.load("assets/d key.png")
+d_key_after = pygame.image.load("assets/d key(after).png")
+
+space_key = pygame.image.load("assets/space key.png")
+space_key_after = pygame.image.load("assets/space key(after).png")
 
 
 screen.blit(w_key, ((SCREEN_HEIGHT-1000), (SCREEN_WIDTH-100)))
@@ -40,14 +64,21 @@ screen.blit(d_key, ((SCREEN_HEIGHT-950), (SCREEN_WIDTH-55)))
 
 screen.blit(space_key, ((SCREEN_HEIGHT-200), (SCREEN_WIDTH-100)))
 
+
 pygame.display.update()
 pygame.time.wait(10)
+
 
 RUNNING = True
 PRESSED = True
 
 
 while RUNNING:
+
+    clock.tick(FPS)
+
+    screen.blit(redsky, (redsky_x, 0))
+
     for event in pygame.event.get():
             
             if event.type ==pygame.QUIT:
@@ -89,4 +120,3 @@ while RUNNING:
             pygame.time.wait(30)
             pygame.display.update()
 
-#hello
