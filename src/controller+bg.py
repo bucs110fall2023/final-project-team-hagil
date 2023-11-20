@@ -65,6 +65,24 @@ background_width = background.get_width()
 background_x = 0
 
 while RUNNING:
+    background_x -= 1
+    if background_x <= -background_width:
+        background_x = 0
+
+    screen.blit(background, (background_x, 0))
+    
+    screen.blit(background, (background_x + background_width, 0))
+    
+    screen.blit(w_key, ((SCREEN_HEIGHT-1000), (SCREEN_WIDTH-100)))
+
+    screen.blit(a_key, ((SCREEN_HEIGHT-1050), (SCREEN_WIDTH-55)))
+
+    screen.blit(s_key, ((SCREEN_HEIGHT-1000), (SCREEN_WIDTH-55)))
+
+    screen.blit(d_key, ((SCREEN_HEIGHT-950), (SCREEN_WIDTH-55)))
+
+    screen.blit(space_key, ((SCREEN_HEIGHT-200), (SCREEN_WIDTH-100)))
+    
     for event in pygame.event.get():
             if event.type ==pygame.QUIT:
                 RUNNING=False
@@ -86,26 +104,11 @@ while RUNNING:
                     screen.blit(space_key_after,(((SCREEN_HEIGHT-200), SCREEN_WIDTH-100)))
                 pygame.display.update()
                 pygame.time.wait(10)
-    background_x -= 1
-    if background_x <= -background_width:
-        background_x = 0
 
         # Render the background
 
     
-    screen.blit(background, (background_x, 0))
-    
-    screen.blit(background, (background_x + background_width, 0))
-    
-    screen.blit(w_key, ((SCREEN_HEIGHT-1000), (SCREEN_WIDTH-100)))
 
-    screen.blit(a_key, ((SCREEN_HEIGHT-1050), (SCREEN_WIDTH-55)))
-
-    screen.blit(s_key, ((SCREEN_HEIGHT-1000), (SCREEN_WIDTH-55)))
-
-    screen.blit(d_key, ((SCREEN_HEIGHT-950), (SCREEN_WIDTH-55)))
-
-    screen.blit(space_key, ((SCREEN_HEIGHT-200), (SCREEN_WIDTH-100)))
     
     pygame.display.update()
     
