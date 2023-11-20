@@ -32,11 +32,41 @@ def background():
 
         pygame.display.update()
 
-screen.fill("white")
-pygame.display.flip()
-pygame.time.wait(1000)
+def control():
+    for event in pygame.event.get():
+            if event.type ==pygame.QUIT:
+                RUNNING=False
+            elif event.type==pygame.KEYDOWN:
+                if event.key==pygame.K_w:
+                    print("Up")
+                    screen.blit(w_key_after,((SCREEN_HEIGHT-1000), (SCREEN_WIDTH-100)))
+                elif event.key==pygame.K_s:
+                    print("Down")
+                    screen.blit(s_key_after,((SCREEN_HEIGHT-1000), SCREEN_WIDTH-55))
+                elif event.key==pygame.K_a:
+                    print("Left")
+                    screen.blit(a_key_after,((SCREEN_HEIGHT-1050), (SCREEN_WIDTH-55)))
+                elif event.key==pygame.K_d:
+                    print("Right")
+                    screen.blit(d_key_after,((SCREEN_HEIGHT-950), (SCREEN_WIDTH-55)))
+                elif event.key==pygame.K_SPACE:
+                    print("Space")
+                    screen.blit(space_key_after,(((SCREEN_HEIGHT-200), SCREEN_WIDTH-100)))
+                
+                pygame.display.update()
+                
+                pygame.time.wait(10)
 
+    
 
+class controlKey():
+    def __init__(self,image,x_coord,y_coord):
+        self.image=pygame.image.load("")
+        self.image=x_coord
+        self.image=y_coord
+    def active(self):
+        self.new_image=pygame.image.load("")
+         
 w_key = pygame.image.load("final-project-team-hagil/assets/w key.png")
 w_key_after = pygame.image.load("final-project-team-hagil/assets/w key(after).png")
 
@@ -81,8 +111,7 @@ while RUNNING:
 
     screen.blit(d_key, ((SCREEN_HEIGHT-950), (SCREEN_WIDTH-55)))
 
-    screen.blit(space_key, ((SCREEN_HEIGHT-200), (SCREEN_WIDTH-100)))
-    
+    screen.blit(space_key, ((SCREEN_HEIGHT-200), (SCREEN_WIDTH-100)))    
     for event in pygame.event.get():
             if event.type ==pygame.QUIT:
                 RUNNING=False
