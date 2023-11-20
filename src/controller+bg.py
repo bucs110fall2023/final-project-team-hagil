@@ -64,7 +64,7 @@ background = pygame.image.load("final-project-team-hagil/assets/redsky.png")
 background_width = background.get_width()
 background_x = 0
 
-while RUNNING:
+while RUNNING:      
     background_x -= 1
     if background_x <= -background_width:
         background_x = 0
@@ -102,7 +102,9 @@ while RUNNING:
                 elif event.key==pygame.K_SPACE:
                     print("Space")
                     screen.blit(space_key_after,(((SCREEN_HEIGHT-200), SCREEN_WIDTH-100)))
+                
                 pygame.display.update()
+                
                 pygame.time.wait(10)
 
         # Render the background
