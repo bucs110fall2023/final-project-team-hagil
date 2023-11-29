@@ -70,7 +70,6 @@ class controlKey():
     def active(self):
         self.new_image=pygame.image.load("")
          
-<<<<<<< Updated upstream
 w_key = pygame.image.load("final-project-team-hagil/assets/keyboard/w key.png")
 w_key_after = pygame.image.load("final-project-team-hagil/assets/keyboard/w key(after).png")
 
@@ -85,22 +84,6 @@ d_key_after = pygame.image.load("final-project-team-hagil/assets/keyboard/d key(
 
 space_key = pygame.image.load("final-project-team-hagil/assets/keyboard/space key.png")
 space_key_after = pygame.image.load("final-project-team-hagil/assets/keyboard/space key(after).png")
-=======
-w_key = pygame.image.load("assets/w key.png")
-w_key_after = pygame.image.load("assets/w key(after).png")
-
-s_key = pygame.image.load("assets/s key.png")
-s_key_after = pygame.image.load("assets/s key(after).png")
-
-a_key = pygame.image.load("assets/a key.png")
-a_key_after = pygame.image.load("assets/a key(after).png")
-
-d_key = pygame.image.load("assets/d key.png")
-d_key_after = pygame.image.load("assets/d key(after).png")
-
-space_key = pygame.image.load("assets/space key.png")
-space_key_after = pygame.image.load("assets/space key(after).png")
->>>>>>> Stashed changes
 
 class playerTask(pygame.sprite.Sprite):
     def __init__(self,image,pos_x,pos_y):
@@ -121,11 +104,7 @@ pygame.time.wait(10)
 
 RUNNING = True
 
-<<<<<<< Updated upstream
-background = pygame.image.load("final-project-team-hagil/assets/background/redsky.png")
-=======
-background = pygame.image.load("assets/image (1).png")
->>>>>>> Stashed changes
+background = pygame.image.load("final-project-team-hagil/assets/background/image.png")
 background_width = background.get_width()
 background_x = 0
 Playing=True
