@@ -16,10 +16,11 @@ class playerTask(pygame.sprite.Sprite):
         self.rect=self.image.get_rect()
         self.rect.center=[pos_x,pos_y]
         
-taskbar=playerTask("final-project-team-hagil/assets/test.png",540,400)
+        
+taskbar =playerTask("final-project-team-hagil/assets/test.png",540,400)
 taskbar_group=pygame.sprite.Group(taskbar)# image size should be < 686x52px
 taskbar_group.draw(screen)
-pygame.display.flip()
+pygame.display.update()
 while RUNNING:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
