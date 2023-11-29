@@ -112,6 +112,7 @@ while RUNNING:
     screen.blit(d_key, ((SCREEN_HEIGHT-950), (SCREEN_WIDTH-55)))
 
     screen.blit(space_key, ((SCREEN_HEIGHT-200), (SCREEN_WIDTH-100)))    
+    
     for event in pygame.event.get():
             if event.type ==pygame.QUIT:
                 RUNNING=False
