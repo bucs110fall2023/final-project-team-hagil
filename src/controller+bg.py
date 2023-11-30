@@ -94,7 +94,7 @@ class playerTask(pygame.sprite.Sprite):
         self.rect.center=[pos_x,pos_y]
         
         
-taskbar =playerTask("final-project-team-hagil/assets/test.png",540,400)
+taskbar =playerTask("final-project-team-hagil/assets/taskbar/sunset.png",540,550)
 taskbar_group=pygame.sprite.Group(taskbar)# image size should be < 686x52px
 
 
@@ -104,7 +104,7 @@ pygame.time.wait(10)
 
 RUNNING = True
 
-background = pygame.image.load("final-project-team-hagil/assets/background/image.png")
+background = pygame.image.load("final-project-team-hagil/assets/background/sunset.png")
 background_width = background.get_width()
 background_x = 0
 Playing=True
