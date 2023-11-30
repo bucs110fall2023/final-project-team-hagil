@@ -33,8 +33,6 @@ def background():
         screen.blit(background, (background_x, 0))
         screen.blit(background, (background_x + background_width, 0))
 
-        pygame.display.update()
-
 def control():
     for event in pygame.event.get():
             if event.type ==pygame.QUIT:
