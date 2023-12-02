@@ -1,7 +1,6 @@
 import pygame
 import random
-
-
+import time
 pygame.init()
 
 
@@ -120,6 +119,7 @@ RUNNING = True
 background = pygame.image.load("final-project-team-hagil/assets/background/sunset.png")
 background_width = background.get_width()
 background_x = 0
+
 Playing=True
 
 pygame.display.flip()  
