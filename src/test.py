@@ -76,7 +76,6 @@ while True:
     pygame.time.wait(2000)
     taskbar_group=pygame.sprite.Group(taskbar)# image size should be < 686x52px 
     taskbar_group.draw(screen)
-    answer=[]
     pygame.display.update()
 
 while RUNNING:

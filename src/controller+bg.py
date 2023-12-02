@@ -68,11 +68,13 @@ def control():
 
 class controlKey():
     def __init__(self,image,x_coord,y_coord):
-        self.image=pygame.image.load("")
+        self.image=pygame.image.load(image)
         self.image=x_coord
         self.image=y_coord
-    def active(self):
+    def active(self,image,x_coord,y_coord):
         self.new_image=pygame.image.load("")
+        self.image=x_coord
+        self.image=y_coord
          
 w_key = pygame.image.load("final-project-team-hagil/assets/keyboard/w key.png")
 w_key_after = pygame.image.load("final-project-team-hagil/assets/keyboard/w key(after).png")
