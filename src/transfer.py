@@ -156,6 +156,7 @@ def mainloop():
         
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
+                Playing=False
                 RUNNING = False
             elif event.type==pygame.KEYDOWN:
                 if event.key==pygame.K_w:

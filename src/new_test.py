@@ -32,6 +32,9 @@ Al_KEY={
 }
 
 
+def create_key(lib):
+    use_key=pygame.image.load(lib)
+    return use_key
 def evaluate_xdistance(obstacle_sequence):
     if obstacle_sequence==10 or obstacle_sequence==6:
         x=310
@@ -65,11 +68,10 @@ class Obstacle(pygame.sprite.Sprite):
         self.rect=self.image.get_rect()
         self.rect.x=pos_x
         self.rect.y=pos_y
-    def update(self) :
-        for event in pygame.event.get():
-            if event.type==pygame.KEYDOWN:
-                if event.key==pygame.K_w:
-                    self.image=pygame.image.load("final-project-team-hagil/assets/keyboard/w key.png")
+    def update(self,img,new_x_pos,new_y_pos) :
+        self.image=pygame.image.load(img)
+        self.rect.x=new_x_pos
+        self.rect.y=new_y_pos
 class Group(pygame.sprite.Group):
     def update(self):
         for Object in self.sprites():
@@ -80,11 +82,11 @@ taskbar_group=Group()
 obstacle_group=Group()
 taskbar_group.add(taskbar)
 taskbar_group.draw(screen)
+RUNNING=True
+Testing=True
 
-
-key=[]
-order={}
-while True:
+while RUNNING:
+    order={}
     obstacle_sequence =random.randrange(3,11)
     x_coord=evaluate_xdistance(obstacle_sequence)
     y_coord=550
@@ -92,43 +94,77 @@ while True:
     answer=[]
     coordinate=[]
     final=[]
+    key=["state"]
+    z=0
+ 
+                
+    print(key)      
+    pygame.display.update()
     for i in range(obstacle_sequence):
         newkey=["w_key","s_key","a_key","d_key"]
         generatekey=(random.choice(newkey))
         answer.append(generatekey)
-        
+            
         obstacle=Obstacle(OG_KEY[generatekey],x_coord,y_coord)
-        location=(x_coord,y_coord)
-        coordinate.append(location)
-        
-        
+        coordinate.append(x_coord)
+            
         obstacle_group.add(obstacle)
-        
-        
+            
+            
 
         pygame.time.wait(100)
         pygame.display.update()
         x_coord+=distance
         obstacle_group.draw(screen)
         pygame.display.update()
-    #for k in answer:
-        #order[k]= 
-        
     print(answer)
-    for i in range(obstacle_sequence):
-        order[answer[i]]=coordinate[i]
-        final.append(order[answer[i]])
-    print (final)  
-    pygame.time.wait(1000)
+    print(answer[0])
+    print(coordinate[0])
+    Testing=True
+    
+    while Testing:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                RUNNING = False
+            elif event.type==pygame.KEYDOWN:
+                if event.key==pygame.K_w:
+                    key.append("w_key")
+                    print("up")
+                elif event.key==pygame.K_s:
+                    key.append("s_key")
+                elif event.key==pygame.K_a:
+                    key.append("a_key")
+                elif event.key==pygame.K_d:
+                    key.append("d_key")             
+                elif event.key==pygame.K_SPACE:
+                    key.append("submit")
+                obstacle_group.empty()
+                if  key[-1]=="submit" and answer==[]:
+                    Testing=False
+                elif key[-1]==answer[0]:        
+                    obstacle.update(Al_KEY[answer[0]],coordinate[z],550)
+                    obstacle_group.add(obstacle)
+                    obstacle_group.draw(screen)
+                    z+=1
+                    answer.remove(answer[0])
+                    pygame.display.flip()
+                    if answer==[]:
+                        Testing=False
+
+               
+
+    pygame.time.wait(100)
     obstacle_group.empty()
-    
-    
-    # image size should be < 686x52px 
+        
+        
+        # image size should be < 686x52px 
     taskbar_group.draw(screen)
             
-    
+
     pygame.time.wait(100)
 
     pygame.display.flip()
 
+
+    
             
