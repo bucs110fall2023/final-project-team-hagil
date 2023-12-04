@@ -19,35 +19,35 @@ pygame.display.flip()
 
 # Load the Images
 OG_KEY = {
-    "w_key": "final-project-team-hagil/assets/keyboard/w key.png",
-    "a_key": "final-project-team-hagil/assets/keyboard/a key.png",
-    "s_key": "final-project-team-hagil/assets/keyboard/s key.png",
-    "d_key": "final-project-team-hagil/assets/keyboard/d key.png",
-    "space_key": "final-project-team-hagil/assets/keyboard/space key.png",
+    "w_key": "assets/keyboard/w key.png",
+    "a_key": "assets/keyboard/a key.png",
+    "s_key": "assets/keyboard/s key.png",
+    "d_key": "assets/keyboard/d key.png",
+    "space_key": "assets/keyboard/space key.png",
 }
 
 Al_KEY = {
-    "w_key": "final-project-team-hagil/assets/keyboard/w key(after).png",
-    "a_key": "final-project-team-hagil/assets/keyboard/a key(after).png",
-    "s_key": "final-project-team-hagil/assets/keyboard/s key(after).png",
-    "d_key": "final-project-team-hagil/assets/keyboard/d key(after).png",
-    "space_key": "final-project-team-hagil/assets/keyboard/space key(after).png",
+    "w_key": "assets/keyboard/w key(after).png",
+    "a_key": "assets/keyboard/a key(after).png",
+    "s_key": "assets/keyboard/s key(after).png",
+    "d_key": "assets/keyboard/d key(after).png",
+    "space_key": "assets/keyboard/space key(after).png",
 }
 
 BG = {
-    "dreamy": "final-project-team-hagil/assets/background/dreamy.png",
-    "mountain": "final-project-team-hagil/assets/background/mountain.png",
-    "nightsky": "final-project-team-hagil/assets/background/nightsky.png",
-    "redsky": "final-project-team-hagil/assets/background/redsky.png",
-    "sunset": "final-project-team-hagil/assets/background/sunset.png",
+    "dreamy": "assets/background/dreamy.png",
+    "mountain": "assets/background/mountain.png",
+    "nightsky": "assets/background/nightsky.png",
+    "redsky": "assets/background/redsky.png",
+    "sunset": "assets/background/sunset.png",
 }
 
 TASKBAR = {
-    "mountain": "final-project-team-hagil/assets/taskbar/mountain.png",
-    "nightsky": "final-project-team-hagil/assets/taskbar/nightsky.png",
-    "redsky": "final-project-team-hagil/assets/taskbar/redsky+dreamy.png",
-    "dreamy": "final-project-team-hagil/assets/taskbar/redsky+dreamy.png",
-    "sunset": "final-project-team-hagil/assets/taskbar/sunset.png"
+    "mountain": "assets/taskbar/mountain.png",
+    "nightsky": "assets/taskbar/nightsky.png",
+    "redsky": "assets/taskbar/redsky+dreamy.png",
+    "dreamy": "assets/taskbar/redsky+dreamy.png",
+    "sunset": "assets/taskbar/sunset.png"
 }
 
 
@@ -142,7 +142,7 @@ def bg_taskbar():
         if background_x <= -background_width:
             background_x = 0
 
-        screen.blit(background, (background_x, 0))
+        screen.blit(background, (background_x, 130))
         screen.blit(background, (background_x + background_width, 0))
 
         
@@ -209,22 +209,13 @@ def obstacle():
         taskbar_group.draw(screen)
         PLAYING = False
 
-bg_thread = threading.Thread(target = bg_taskbar)
-    
-        
-obstacle_thread = threading.Thread(target = obstacle)
-
     
 
 
 
 # Create Main Loop
 def main_loop():
-        bg_thread.start()
-        print("Done2")
-        obstacle_thread.start()
-        print("Done1")
-        bg_thread.join()
-        obstacle_thread.join()
-while True:
-    main_loop()
+        bg_taskbar()
+        obstacle()
+
+main_loop()
