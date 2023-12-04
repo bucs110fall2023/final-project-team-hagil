@@ -121,7 +121,7 @@ def create_key(lib):
     return use_key
 
 
-def generate_bg_taskbar():
+def bg_taskbar():
     random_value = choose_random(BG)
 
     background_x = 0
@@ -167,7 +167,7 @@ def generate_bg_taskbar():
                 pygame.display.update()
         pygame.display.update()
 
-def generate_obstacle():
+def obstacle():
     PLAYING = True
     while PLAYING:
         random_value = choose_random(BG)
@@ -205,21 +205,24 @@ def generate_obstacle():
         taskbar_group.draw(screen)
         PLAYING = False
 
+def generate_bg_taskbar():
+    bg_thread = threading.Thread(target = bg_taskbar)
+    bg_thread.start()
+    bg_thread.join()
+    print("Done1")
+def generate_obstacle():
+    obstacle_thread = threading.Thread(target = obstacle)
+    obstacle_thread.start()
+    obstacle_thread.join()
+    print("Done2")
 
-# Create Thread Function
-def thread1():
-    while True:
-        generate_bg_taskbar()
-        time.sleep(1.0)
 
-# Create Thread
-threads = [threading.Thread(target=thread1)]
-for i in threads:
-    i.start()
 
 # Create Main Loop
-def mainloop():
-    generate_bg_taskbar()
-    generate_obstacle()
+def main_loop():
+    while True:
+        generate_bg_taskbar()
+        generate_obstacle()
+        print("Done")
 
-mainloop()
+main_loop()
