@@ -48,5 +48,11 @@ of the submit bar
 - << You should have a list of each of your classes with a description >>
 
 ## ATP
+Project: Rhythm Game 
+    Test Case 1: Key reflected while pressed:
+        Step 1: Start the game.
+        Step 2: Press key “w”, “a”, “s”, “d”, and “space”
+        Step 3: A blink of light yellow will be displayed in the pressed key. For example if users press "w", the key "w" on the screen gonna turn "yellow" and back to "purple". This will signal whether the key the users pressed is as the same as the data input to the computer
+        
 
 

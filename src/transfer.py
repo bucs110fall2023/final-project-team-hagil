@@ -142,6 +142,7 @@ def create_key(lib):
 
 def mainloop():
     background_x=0
+    clock=pygame.time.Clock()
     
     obstacle_group=pygame.sprite.Group()
 
@@ -263,7 +264,7 @@ def mainloop():
                         total_lose.append(wrong_ans)
                         Testing=False
                     elif  answer==[]:
-                        pygame.time.wait(200) 
+                        pygame.time.wait(20) 
                         total_win.append(right_ans)
                         total_lose.append(wrong_ans)
                         key=[]  
@@ -273,7 +274,8 @@ def mainloop():
                     
 
                     pygame.display.flip()
-                pygame.display.flip()
+            pygame.display.flip()
+            clock.tick(60)
     print(total_lose,total_win)     
                         
 mainloop()
