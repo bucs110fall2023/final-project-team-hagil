@@ -146,6 +146,12 @@ while RUNNING:
 
     Surface1.blit(space_key, ((SCREEN_HEIGHT-200), (SCREEN_WIDTH-100)))    
     
+    
+    Playing= True
+    taskbar_group.draw(screen)
+    taskbar_group.draw(screen)
+    
+    
     for event in pygame.event.get():
             if event.type ==pygame.QUIT:
                 RUNNING=False
@@ -181,11 +187,7 @@ while RUNNING:
     pygame.display.update()
     
     pygame.time.wait(5)
-    Playing= True
-    taskbar_group.draw(screen)
-    taskbar_group.draw(screen)
-    
-    while Playing:
+    """while Playing:
         
         obstacle_sequence=random.randrange(3,11)
 
@@ -222,6 +224,6 @@ while RUNNING:
         taskbar_group.draw(screen)
         Playing=False
     pygame.display.update()
-   
+   """
 
 #hello

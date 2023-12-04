@@ -1,7 +1,7 @@
 import pygame 
 import time
 import random
-
+import threading
 pygame.init()
 
 
@@ -104,11 +104,11 @@ def choose_random(list_name):
 
 def evaluate_xdistance(obstacle_sequence):
     if obstacle_sequence==10 or obstacle_sequence==6:
-        x=310
-    elif obstacle_sequence==7 or obstacle_sequence==8 or obstacle_sequence==9:
         x=300
+    elif obstacle_sequence==7 or obstacle_sequence==8 or obstacle_sequence==9:
+        x=290
     elif obstacle_sequence==3 or obstacle_sequence==4 or obstacle_sequence==5:
-        x=420-(obstacle_sequence-3)*50
+        x=400-(obstacle_sequence-3)*50
     return x
 def evaluate_ydistance(obstacle_sequence):
     if obstacle_sequence==10 or obstacle_sequence==6:
@@ -131,7 +131,7 @@ def OG_key():
     screen.blit(create_key(OG_KEY["s_key"]),(SCREEN_HEIGHT-1000,SCREEN_WIDTH-55))
     screen.blit(create_key(OG_KEY["a_key"]),(SCREEN_HEIGHT-1050,SCREEN_WIDTH-55))
     screen.blit(create_key(OG_KEY["d_key"]),(SCREEN_HEIGHT-950,SCREEN_WIDTH-55))
-    screen.blit(create_key(OG_KEY["space_key"]),(SCREEN_HEIGHT-200,SCREEN_WIDTH-100))
+    screen.blit(create_key(OG_KEY["space_key"]),(SCREEN_HEIGHT-150,SCREEN_WIDTH-100))
   
 
 
@@ -148,30 +148,35 @@ def mainloop():
     taskbar_group=pygame.sprite.Group()# image size should be < 686x52px 
     random_value=choose_random(BG)
     background = pygame.image.load(BG[random_value])
-    taskbar=Taskbar(TASKBAR[random_value],540,550)
+    test=pygame.image.load(Al_KEY["d_key"])
+    taskbar=Taskbar(TASKBAR[random_value],540,665)
     taskbar_group.add(taskbar)
    
     RUNNING=True
-    screen.blit(background, (background_x, 0))
-    right_ans=0
-    wrong_ans=0
+
     
+    screen.blit(background, (background_x, 0))
+    
+    total_win=[]
+    total_lose=[]
     
     while RUNNING:
         
-        
+        right_ans=0
+        wrong_ans=0
+        pygame.display.update()
+    
         OG_key()
         for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     RUNNING = False
             
         taskbar_group.draw(screen)
-
         
-        
+        pygame.display.flip()
         obstacle_sequence =random.randrange(3,11)
         x_coord=evaluate_xdistance(obstacle_sequence)
-        y_coord=530
+        y_coord=640
         distance=evaluate_ydistance(obstacle_sequence)
         answer=[]
         coordinate=[]
@@ -207,6 +212,7 @@ def mainloop():
     
         while Testing:
             
+        
             OG_key()
             
             for event in pygame.event.get():
@@ -221,7 +227,7 @@ def mainloop():
                         print("up")
                     elif event.key==pygame.K_s:
                         key.append("s_key")
-                        
+                    
                         screen.blit(create_key(Al_KEY["s_key"]),(SCREEN_HEIGHT-1000,SCREEN_WIDTH-55))
                     elif event.key==pygame.K_a:
                         screen.blit(create_key(Al_KEY["a_key"]),(SCREEN_HEIGHT-1050,SCREEN_WIDTH-55))
@@ -231,20 +237,11 @@ def mainloop():
                         key.append("d_key")             
                     elif event.key==pygame.K_SPACE:
                         key.append("submit")
-                        screen.blit(create_key(Al_KEY["space_key"]),(SCREEN_HEIGHT-200,SCREEN_WIDTH-100))
+                        screen.blit(create_key(Al_KEY["space_key"]),(SCREEN_HEIGHT-150,SCREEN_WIDTH-100))
+                    pygame.display.flip()
                     obstacle_group.empty()
-                    if  key[-1]=="submit" and answer==[]:
-                        key=[]  
-                        Testing=False
-                    elif answer==[]:                            
-                        pygame.time.wait(10)
-                        if key[-1]=="submit":
-                            key=[]
-                            Testing=False
-                        else:
-                            key=[]
-                            Testing=False 
-                    elif key[-1]==answer[0]:        
+                                
+                    if key[-1]==answer[0]:        
                         obstacle.update(Al_KEY[answer[0]],coordinate[z],y_coord)
                         right_ans+=1
                         obstacle_group.add(obstacle)
@@ -252,7 +249,6 @@ def mainloop():
                         z+=1
                         answer.pop(0)
                         obstacle_group.empty()
-                        pygame.display.flip()
                     elif key[-1]!=answer[0]:        
                         obstacle.update(FALSE_KEY[answer[0]],coordinate[z],y_coord)
                         wrong_ans+=1
@@ -261,8 +257,24 @@ def mainloop():
                         z+=1
                         answer.pop(0)
                         obstacle_group.empty()
-                        pygame.display.flip()
-    print(right_ans,wrong_ans)     
+                    pygame.display.flip()
+                    if key[-1]=="submit":
+                        total_win.append(right_ans)
+                        total_lose.append(wrong_ans)
+                        Testing=False
+                    elif  answer==[]:
+                        pygame.time.wait(200) 
+                        total_win.append(right_ans)
+                        total_lose.append(wrong_ans)
+                        key=[]  
+                        Testing=False
+                  
+                    
+                    
+
+                    pygame.display.flip()
+                pygame.display.flip()
+    print(total_lose,total_win)     
                         
 mainloop()
  

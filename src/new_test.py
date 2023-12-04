@@ -14,6 +14,8 @@ screen.fill("white")
 answer=[]
 count=0
 
+Surface1=pygame.Surface([1080,720])
+
 
 OG_KEY={
     "w_key":"final-project-team-hagil/assets/keyboard/w key.png",
@@ -85,7 +87,15 @@ taskbar_group.draw(screen)
 RUNNING=True
 Testing=True
 
+background = pygame.image.load("final-project-team-hagil/assets/background/sunset.png")
+background_width = background.get_width()
+background_x = 0
+
 while RUNNING:
+    
+    background_x -= 1
+    if background_x <= -background_width:
+        background_x = 0
     order={}
     obstacle_sequence =random.randrange(3,11)
     x_coord=evaluate_xdistance(obstacle_sequence)
@@ -96,11 +106,22 @@ while RUNNING:
     final=[]
     key=["state"]
     z=0
- 
-                
+    Surface1.blit(background, (background_x, 0))
+    
+    Surface1.blit(background, (background_x + background_width, 0))
+   
+     
+    screen.blit(Surface1,(0,0))
+    taskbar_group.draw(screen)
+    pygame.display.update()             
     print(key)      
     pygame.display.update()
     for i in range(obstacle_sequence):
+        Surface1.blit(background, (background_x, 0))
+    
+        Surface1.blit(background, (background_x + background_width, 0))
+         
+   
         newkey=["w_key","s_key","a_key","d_key"]
         generatekey=(random.choice(newkey))
         answer.append(generatekey)
@@ -109,20 +130,32 @@ while RUNNING:
         coordinate.append(x_coord)
             
         obstacle_group.add(obstacle)
+        
             
             
 
         pygame.time.wait(100)
         pygame.display.update()
         x_coord+=distance
+        
+        
         obstacle_group.draw(screen)
         pygame.display.update()
+    
+    screen.blit(Surface1,(0,0))
+    obstacle_group.draw(screen)
+    
+    pygame.display.update()
     print(answer)
     print(answer[0])
     print(coordinate[0])
     Testing=True
     
     while Testing:
+        Surface1.blit(background, (background_x, 0))
+    
+        Surface1.blit(background, (background_x + background_width, 0))
+         
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 RUNNING = False
@@ -150,6 +183,8 @@ while RUNNING:
                     pygame.display.flip()
                     if answer==[]:
                         Testing=False
+            
+        screen.blit(Surface1,(0,0))
 
                
 
