@@ -11,6 +11,7 @@ pygame.init()
 SCREEN_WIDTH = 1080
 SCREEN_HEIGHT = 720
 SCREEN_SIZE = (SCREEN_WIDTH, SCREEN_HEIGHT)
+Surface1=pygame.Surface([1080,720])
 
 screen = pygame.display.set_mode(SCREEN_SIZE)
 screen.fill("white")
