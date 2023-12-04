@@ -14,47 +14,52 @@ screen.fill("white")
 pygame.display.flip
 
 
+music = pygame.mixer.music.load("assets/musics/careless.mp3")
+# pygame.mixer.music.play(-1)
+
+pygame.mixer.music.set_volume(0.1)
+
+
+
+
+
 
 OG_KEY={
-    "w_key":"final-project-team-hagil/assets/keyboard/w key.png",
-    "s_key":"final-project-team-hagil/assets/keyboard/s key.png",
-    "a_key":"final-project-team-hagil/assets/keyboard/a key.png",
-    "d_key":"final-project-team-hagil/assets/keyboard/d key.png",
-    "space_key":"final-project-team-hagil/assets/keyboard/space key.png",
+    "w_key":"assets/keyboard/w key.png",
+    "s_key":"assets/keyboard/s key.png",
+    "a_key":"assets/keyboard/a key.png",
+    "d_key":"assets/keyboard/d key.png",
+    "space_key":"assets/keyboard/space key.png"
 }
 Al_KEY={
-    
-    "w_key":"final-project-team-hagil/assets/keyboard/w key(after).png",
-    "s_key":"final-project-team-hagil/assets/keyboard/s key(after).png",
-    "a_key":"final-project-team-hagil/assets/keyboard/a key(after).png",
-    "d_key":"final-project-team-hagil/assets/keyboard/d key(after).png",
-    "space_key":"final-project-team-hagil/assets/keyboard/space key(after).png",
+    "w_key":"assets/keyboard/w key(after).png",
+    "s_key":"assets/keyboard/s key(after).png",
+    "a_key":"assets/keyboard/a key(after).png",
+    "d_key":"assets/keyboard/d key(after).png",
+    "space_key":"assets/keyboard/space key(after).png"
     
 }
-
 FALSE_KEY={
-    
-    "w_key":"final-project-team-hagil/assets/keyboard/w key(wrong).png",
-    "s_key":"final-project-team-hagil/assets/keyboard/s key(wrong).png",
-    "a_key":"final-project-team-hagil/assets/keyboard/a key(wrong).png",
-    "d_key":"final-project-team-hagil/assets/keyboard/d key(wrong).png",
+    "w_key":"assets/keyboard/w key(wrong).png",
+    "s_key":"assets/keyboard/s key(wrong).png",
+    "a_key":"assets/keyboard/a key(wrong).png",
+    "d_key":"assets/keyboard/d key(wrong).png"
 }    
 BG={
-    "dreamy":"final-project-team-hagil/assets/background/dreamy.png",
-    "mountain":"final-project-team-hagil/assets/background/mountain.png",
-    "nightsky":"final-project-team-hagil/assets/background/nightsky.png",
-    "redsky":"final-project-team-hagil/assets/background/redsky.png",
-    "sunset":"final-project-team-hagil/assets/background/sunset.png",
-    
+    "dreamy":"assets/background/dreamy.png",
+    "mountain":"assets/background/mountain.png",
+    "nightsky":"assets/background/nightsky.png",
+    "redsky":"assets/background/redsky.png",
+    "sunset":"assets/background/sunset.png"
 }
 TASKBAR={
-    "mountain":"final-project-team-hagil/assets/taskbar/mountain.png",
-    "nightsky":"final-project-team-hagil/assets/taskbar/nightsky.png",
-    "redsky":"final-project-team-hagil/assets/taskbar/redsky+dreamy.png",
-    "dreamy":"final-project-team-hagil/assets/taskbar/redsky+dreamy.png",
-    "sunset":"final-project-team-hagil/assets/taskbar/sunset.png",
-
+    "mountain":"assets/taskbar/mountain.png",
+    "nightsky":"assets/taskbar/nightsky.png",
+    "redsky":"assets/taskbar/redsky+dreamy.png",
+    "dreamy":"assets/taskbar/redsky+dreamy.png",
+    "sunset":"assets/taskbar/sunset.png",
 }
+
 class Taskbar(pygame.sprite.Sprite):
     def __init__(self,image,pos_x,pos_y):
         super().__init__()
@@ -62,7 +67,7 @@ class Taskbar(pygame.sprite.Sprite):
         self.image=pygame.image.load(image)
         self.rect=self.image.get_rect()
         self.rect.center=[pos_x,pos_y]
-        
+
 class Obstacle(pygame.sprite.Sprite):
     def __init__(self,image,pos_x,pos_y ):
         super().__init__()
@@ -75,6 +80,7 @@ class Obstacle(pygame.sprite.Sprite):
         self.image=pygame.image.load(img)
         self.rect.x=new_x_pos
         self.rect.y=new_y_pos
+
 class Keyboard(pygame.sprite.Sprite):
     def __init__(self,image,pos_x,pos_y):
         super().__init__()
@@ -83,8 +89,7 @@ class Keyboard(pygame.sprite.Sprite):
         self.rect=self.image.get_rect()
         self.rect.x=pos_x
         self.rect.y=pos_y
-        
-                           
+                         
 class Group(pygame.sprite.Group):
     def update(self):
         for Object in self.sprites():
@@ -101,7 +106,6 @@ def choose_random(list_name):
     chosen_value=random.choice(selection)
     return chosen_value
 
-
 def evaluate_xdistance(obstacle_sequence):
     if obstacle_sequence==10 or obstacle_sequence==6:
         x=300
@@ -110,6 +114,7 @@ def evaluate_xdistance(obstacle_sequence):
     elif obstacle_sequence==3 or obstacle_sequence==4 or obstacle_sequence==5:
         x=400-(obstacle_sequence-3)*50
     return x
+
 def evaluate_ydistance(obstacle_sequence):
     if obstacle_sequence==10 or obstacle_sequence==6:
         if obstacle_sequence==10:
@@ -122,8 +127,6 @@ def evaluate_ydistance(obstacle_sequence):
         y=110
     return y
 
-
-
 def OG_key():
    
     
@@ -132,12 +135,25 @@ def OG_key():
     screen.blit(create_key(OG_KEY["a_key"]),(SCREEN_HEIGHT-1050,SCREEN_WIDTH-55))
     screen.blit(create_key(OG_KEY["d_key"]),(SCREEN_HEIGHT-950,SCREEN_WIDTH-55))
     screen.blit(create_key(OG_KEY["space_key"]),(SCREEN_HEIGHT-150,SCREEN_WIDTH-100))
-  
-
 
 def create_key(lib):
     use_key=pygame.image.load(lib)
     return use_key
+
+def thread_background():
+    random_value=choose_random(BG)
+    background = pygame.image.load(BG[random_value])
+    while True:
+        background_width=background.get_width()
+        background_x -= 1
+        if background_x <= -background_width:
+            background_x = 0
+
+        screen.blit(background, (background_x, 0))
+        screen.blit(background, (background_x + background_width, 0))
+
+thread1 = threading.Thread(target=thread_background)
+
 
 
 def mainloop():
@@ -149,18 +165,17 @@ def mainloop():
     taskbar_group=pygame.sprite.Group()# image size should be < 686x52px 
     random_value=choose_random(BG)
     background = pygame.image.load(BG[random_value])
+    bar_background = pygame.image.load(BG[random_value])
     test=pygame.image.load(Al_KEY["d_key"])
     taskbar=Taskbar(TASKBAR[random_value],540,665)
     taskbar_group.add(taskbar)
    
     RUNNING=True
 
-    
-    screen.blit(background, (background_x, 0))
-    
+
     total_win=[]
     total_lose=[]
-    
+    thread1.start()
     while RUNNING:
         
         right_ans=0
@@ -213,7 +228,7 @@ def mainloop():
     
         while Testing:
             
-        
+            
             OG_key()
             
             for event in pygame.event.get():
