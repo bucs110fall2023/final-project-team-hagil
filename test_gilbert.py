@@ -1,4 +1,59 @@
 import pygame
+from pygame import mixer
+
+pygame.init()
+
+# Set the Screen Size
+SCREEN_WIDTH = 1080
+SCREEN_HEIGHT = 720
+SCREEN_SIZE = (SCREEN_WIDTH, SCREEN_HEIGHT)
+
+screen = pygame.display.set_mode(SCREEN_SIZE)
+screen.fill("white")
+pygame.display.flip()
+
+mixer.init()
+mixer.music.load("assets/musics/music.mp3")
+mixer.music.play()
+
+while True:
+
+    print("Press 'p' to pause, 'r' to resume") 
+    print("Press 'e' to exit the program") 
+    query = input("  ")
+    mixer.init()
+    mixer.music.load("assets/musics/music.mp3")
+    mixer.music.play() 
+      
+    if query == 'p': 
+  
+        # Pausing the music 
+        mixer.music.pause()      
+    elif query == 'r': 
+  
+        # Resuming the music 
+        mixer.music.unpause() 
+    elif query == 'e': 
+  
+        # Stop the mixer 
+        mixer.music.stop() 
+        break
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+"""
+import pygame
 import random
 import threading
 import time
@@ -209,12 +264,11 @@ def generate_bg_taskbar():
     bg_thread = threading.Thread(target = bg_taskbar)
     bg_thread.start()
     bg_thread.join()
-    print("Done1")
+
 def generate_obstacle():
     obstacle_thread = threading.Thread(target = obstacle)
     obstacle_thread.start()
     obstacle_thread.join()
-    print("Done2")
 
 
 
@@ -223,6 +277,6 @@ def main_loop():
     while True:
         generate_bg_taskbar()
         generate_obstacle()
-        print("Done")
 
 main_loop()
+"""
