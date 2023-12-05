@@ -1,27 +1,32 @@
 import pygame
 
-class Sprite(pygame.sprite.Sprite):
-    def __init__(self):
-        super().__init__()
+# Initialize Pygame
+pygame.init()
+screen=pygame.display.set_mode([600,600])
+# Create a clock object
+clock = pygame.time.Clock()
 
-    def update(self):
-        # Update the sprite's position
-        self.x += 1
+# Set the timer event
+pygame.time.set_timer(pygame.USEREVENT,10000)  # 1000 milliseconds = 1 second
 
-class Group(pygame.sprite.Group):
-    def update(self):
-        # Call the update() method on all sprites in the group
-        super().update()
+# Start the main game loop
+while True:
 
-# Create a group of sprites
-group = Group()
+    # Check for events
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            pygame.quit()
 
-# Add some sprites to the group
-for i in range(10):
-    sprite = Sprite()
-    group.add(sprite)
-    
-group.update()
-pygame.display.flip()
+        # Handle the timer event
+        if event.type == pygame.USEREVENT:
+            print("Timer expired!")
 
-# Update the sprites
+    # Update the game state
+
+    # Render the game screen
+
+    # Flip the display
+    pygame.display.flip()
+
+    # Limit the framerate
+    clock.tick(60)
