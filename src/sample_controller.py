@@ -171,6 +171,9 @@ class Controller:
         self.Testing=True
     
         while self.Testing:
+            
+            self.OG_key()
+            
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     
@@ -184,7 +187,6 @@ class Controller:
                         print("up")
                     elif event.key==pygame.K_s:
                         self.key.append("s_key")
-                    
                         self.screen.blit(pygame.image.load(self.Al_KEY["s_key"]),(self.SCREEN_HEIGHT-1000,self.SCREEN_WIDTH-55))
                     elif event.key==pygame.K_a:
                         self.screen.blit(pygame.image.load(self.Al_KEY["a_key"]),(self.SCREEN_HEIGHT-1050,self.SCREEN_WIDTH-55))

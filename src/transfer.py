@@ -18,7 +18,7 @@ screen.fill("white")
 pygame.display.flip()
 
 # Set Music
-music = pygame.mixer.music.load("assets/musics/careless.mp3")
+music = pygame.mixer.music.load("final-project-team-hagil/assets/musics/careless.mp3")
 pygame.mixer.music.play(-1)
 pygame.mixer.music.set_volume(0.2)
 
@@ -28,39 +28,39 @@ pygame.mixer.music.set_volume(0.2)
 font=pygame.font.Font(None,49)
 
 OG_KEY={
-    "w_key":"assets/keyboard/w key.png",
-    "s_key":"assets/keyboard/s key.png",
-    "a_key":"assets/keyboard/a key.png",
-    "d_key":"assets/keyboard/d key.png",
-    "space_key":"assets/keyboard/space key.png"
+    "w_key":"final-project-team-hagil/assets/keyboard/w key.png",
+    "s_key":"final-project-team-hagil/assets/keyboard/s key.png",
+    "a_key":"final-project-team-hagil/assets/keyboard/a key.png",
+    "d_key":"final-project-team-hagil/assets/keyboard/d key.png",
+    "space_key":"final-project-team-hagil/assets/keyboard/space key.png"
 }
 AL_KEY={
-    "w_key":"assets/keyboard/w key(after).png",
-    "s_key":"assets/keyboard/s key(after).png",
-    "a_key":"assets/keyboard/a key(after).png",
-    "d_key":"assets/keyboard/d key(after).png",
-    "space_key":"assets/keyboard/space key(after).png"
+    "w_key":"final-project-team-hagil/assets/keyboard/w key(after).png",
+    "s_key":"final-project-team-hagil/assets/keyboard/s key(after).png",
+    "a_key":"final-project-team-hagil/assets/keyboard/a key(after).png",
+    "d_key":"final-project-team-hagil/assets/keyboard/d key(after).png",
+    "space_key":"final-project-team-hagil/assets/keyboard/space key(after).png"
     
 }
 FALSE_KEY={
-    "w_key":"assets/keyboard/w key(wrong).png",
-    "s_key":"assets/keyboard/s key(wrong).png",
-    "a_key":"assets/keyboard/a key(wrong).png",
-    "d_key":"assets/keyboard/d key(wrong).png"
+    "w_key":"final-project-team-hagil/assets/keyboard/w key(wrong).png",
+    "s_key":"final-project-team-hagil/assets/keyboard/s key(wrong).png",
+    "a_key":"final-project-team-hagil/assets/keyboard/a key(wrong).png",
+    "d_key":"final-project-team-hagil/assets/keyboard/d key(wrong).png"
 }    
 BG={
-    "dreamy":"assets/background/dreamy.png",
-    "mountain":"assets/background/mountain.png",
-    "nightsky":"assets/background/nightsky.png",
-    "redsky":"assets/background/redsky.png",
-    "sunset":"assets/background/sunset.png"
+    "dreamy":"final-project-team-hagil/assets/background/dreamy.png",
+    "mountain":"final-project-team-hagil/assets/background/mountain.png",
+    "nightsky":"final-project-team-hagil/assets/background/nightsky.png",
+    "redsky":"final-project-team-hagil/assets/background/redsky.png",
+    "sunset":"final-project-team-hagil/assets/background/sunset.png"
 }
 TASKBAR={
-    "mountain":"assets/taskbar/mountain.png",
-    "nightsky":"assets/taskbar/nightsky.png",
-    "redsky":"assets/taskbar/redsky+dreamy.png",
-    "dreamy":"assets/taskbar/redsky+dreamy.png",
-    "sunset":"assets/taskbar/sunset.png"
+    "mountain":"final-project-team-hagil/assets/taskbar/mountain.png",
+    "nightsky":"final-project-team-hagil/assets/taskbar/nightsky.png",
+    "redsky":"final-project-team-hagil/assets/taskbar/redsky+dreamy.png",
+    "dreamy":"final-project-team-hagil/assets/taskbar/redsky+dreamy.png",
+    "sunset":"final-project-team-hagil/assets/taskbar/sunset.png"
 }
 
 class Taskbar(pygame.sprite.Sprite):
@@ -155,9 +155,7 @@ def mainloop():
     taskbar_group=pygame.sprite.Group()# image size should be < 686x52px 
     random_value=choose_random(BG)
     background = pygame.image.load(BG[random_value])
-    bar_background = pygame.image.load(BG[random_value])
-    test=pygame.image.load(AL_KEY["d_key"])
-    taskbar=Taskbar(TASKBAR[random_value],540,665)
+    taskbar=Taskbar(TASKBAR[random_value],540,360)
     taskbar_group.add(taskbar)
     obstacle_group=pygame.sprite.Group()
 
@@ -165,7 +163,7 @@ def mainloop():
     
     RUNNING = True
     
-    aim=1000
+    aim=600
     aim2=0
     while RUNNING:
     
@@ -173,10 +171,13 @@ def mainloop():
         wrong_ans=0
         pygame.display.update()
         screen.fill("white")
+        if aim <=0:
+            RUNNING=False
         msg2="You miss "+ str(aim2)
         msg= "Your aim is "+ str(aim)
         text2=font.render(msg2,True,"red")
         text=font.render(msg,True,"blue")
+        screen.blit(background,(0,0))
         screen.blit(text,(SCREEN_HEIGHT/4,0))
         screen.blit(text2,(SCREEN_HEIGHT/4,100))
         
@@ -194,7 +195,7 @@ def mainloop():
         pygame.display.flip()
         obstacle_sequence =random.randrange(3,11)
         x_coord=evaluate_xdistance(obstacle_sequence)
-        y_coord=640
+        y_coord=340
         distance=evaluate_ydistance(obstacle_sequence)
         answer=[]
         coordinate=[]
@@ -225,8 +226,8 @@ def mainloop():
         print(answer)
         print(answer[0])
         print(coordinate[0])
-        
         Testing=True
+
     
         while Testing:
             
@@ -260,8 +261,6 @@ def mainloop():
                         screen.blit(create_key(AL_KEY["space_key"]),(SCREEN_HEIGHT-150,SCREEN_WIDTH-100))
                     pygame.display.flip()
                     obstacle_group.empty()
-                
-                
                     if key[-1]==answer[0]:        
                         obstacle.update(AL_KEY[answer[0]],coordinate[z],y_coord)
                         right_ans+=1
@@ -283,31 +282,26 @@ def mainloop():
                             obstacle_group.empty()
                         pygame.display.flip()
                     if key[-1]=="submit":
-
                         aim=aim-right_ans
                         aim2=aim2+wrong_ans
-                        if aim2>50:
+                        if aim2>10:
                             RUNNING=False
-                        total_win.append(right_ans)
-                        total_lose.append(wrong_ans)
-                        Testing=False
                     elif  answer==[]:
                         aim=aim-right_ans
                         aim2=aim2+wrong_ans
-                        if aim2>50:
-                            Testing=False
+                        if aim2>10:
                             RUNNING=False
                         pygame.time.wait(20) 
-                        key=[]  
                         Testing=False
 
                     
 
                 pygame.display.flip()
-            pygame.display.flip()   
-    
-    time.sleep(10)
-                        
+            pygame.display.flip()
+       
+    screen.fill("yellow")
+    pygame.display.flip()
+    pygame.time.wait(1000)                    
 mainloop()
  
 
