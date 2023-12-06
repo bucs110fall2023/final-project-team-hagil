@@ -1,32 +1,38 @@
 import pygame
+import time
+import sys
 
 # Initialize Pygame
 pygame.init()
-screen=pygame.display.set_mode([600,600])
-# Create a clock object
-clock = pygame.time.Clock()
 
-# Set the timer event
-pygame.time.set_timer(pygame.USEREVENT,10000)  # 1000 milliseconds = 1 second
+# Set the display dimensions (optional)
+pygame.display.set_mode((400, 300))
 
-# Start the main game loop
-while True:
+# Load a music file
+pygame.mixer.music.load("final-project-team-hagil/assets/musics/careless.mp3")
 
-    # Check for events
+# Set the end event
+music_end_event = pygame.USEREVENT + 1
+pygame.mixer.music.set_endevent(music_end_event)
+
+# Start playing the music
+pygame.mixer.music.play()
+
+# Main loop
+running = True
+while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
-            pygame.quit()
+            running = False
+        elif event.type == music_end_event:
+            print("Music has ended.")
+            running = False
 
-        # Handle the timer event
-        if event.type == pygame.USEREVENT:
-            print("Timer expired!")
+    # You can add other game logic or processing here
 
-    # Update the game state
+    # Optionally, you can add a small delay to reduce CPU usage
+    pygame.time.delay(10)
 
-    # Render the game screen
-
-    # Flip the display
-    pygame.display.flip()
-
-    # Limit the framerate
-    clock.tick(60)
+# Quit Pygame
+pygame.quit()
+sys.exit()

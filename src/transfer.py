@@ -19,9 +19,12 @@ pygame.display.flip()
 
 # Set Music
 music = pygame.mixer.music.load("final-project-team-hagil/assets/musics/careless.mp3")
+a=pygame.mixer.Sound("final-project-team-hagil/assets/musics/careless.mp3")
+print(a.get_length())
 pygame.mixer.music.play(-1)
 pygame.mixer.music.set_volume(0.2)
-
+song_length=music.__getstate__
+print(song_length)
 
 
 
@@ -148,7 +151,8 @@ def create_key(lib):
     use_key=pygame.image.load(lib)
     return use_key
 
-
+def evaluate_time(start_time,current_time):
+    return current_time-start_time
 
 def mainloop():
     background_x=0
@@ -165,14 +169,17 @@ def mainloop():
     
     aim=600
     aim2=0
+    start_time=pygame.time.get_ticks()
     while RUNNING:
-    
+        current_time=pygame.time.get_ticks()
+        elapsed_time=evaluate_time(start_time,current_time)
+        if elapsed_time>5000:
+            RUNNING=False
         right_ans=0
         wrong_ans=0
         pygame.display.update()
         screen.fill("white")
-        if aim <=0:
-            RUNNING=False
+
         msg2="You miss "+ str(aim2)
         msg= "Your aim is "+ str(aim)
         text2=font.render(msg2,True,"red")
@@ -189,7 +196,10 @@ def mainloop():
                     #stop_thread.is_set()
                     RUNNING = False
                     sys.exit()
-            
+        current_time=pygame.time.get_ticks()
+        elapsed_time=evaluate_time(start_time,current_time)
+        if elapsed_time>5000:
+            RUNNING=False
         taskbar_group.draw(screen)
         
         pygame.display.flip()
@@ -230,7 +240,9 @@ def mainloop():
 
     
         while Testing:
-            
+            if not pygame.mixer.music.get_busy():
+                RUNNING = False
+        
             OG_key()
             
             for event in pygame.event.get():
@@ -288,11 +300,16 @@ def mainloop():
                             RUNNING=False
                     elif  answer==[]:
                         aim=aim-right_ans
+                        
                         aim2=aim2+wrong_ans
                         if aim2>10:
                             RUNNING=False
                         pygame.time.wait(20) 
                         Testing=False
+            start_time=pygame.time.get_ticks()
+            if current_time-start_time>5:
+                RUNNING=False
+            
 
                     
 
