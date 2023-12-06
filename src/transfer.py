@@ -1,24 +1,26 @@
 import pygame 
-import time
 import random
+import time
 import threading
 import sys
+
+
+# Initialize Pygame
 pygame.init()
 
-
+# Set size of Screen Size
 SCREEN_WIDTH = 720
 SCREEN_HEIGHT = 1080
 SCREEN_SIZE = (SCREEN_HEIGHT, SCREEN_WIDTH)
-RUNNING=True
+
 screen = pygame.display.set_mode(SCREEN_SIZE)
 screen.fill("white")
-pygame.display.flip
+pygame.display.flip()
 
-
-music = pygame.mixer.music.load("final-project-team-hagil/assets/musics/careless.mp3")
+# Set Music
+music = pygame.mixer.music.load("assets/musics/careless.mp3")
 pygame.mixer.music.play(-1)
-
-pygame.mixer.music.set_volume(0.5)
+pygame.mixer.music.set_volume(0.2)
 
 
 
@@ -26,39 +28,39 @@ pygame.mixer.music.set_volume(0.5)
 font=pygame.font.Font(None,49)
 
 OG_KEY={
-    "w_key":"final-project-team-hagil/assets/keyboard/w key.png",
-    "s_key":"final-project-team-hagil/assets/keyboard/s key.png",
-    "a_key":"final-project-team-hagil/assets/keyboard/a key.png",
-    "d_key":"final-project-team-hagil/assets/keyboard/d key.png",
-    "space_key":"final-project-team-hagil/assets/keyboard/space key.png"
+    "w_key":"assets/keyboard/w key.png",
+    "s_key":"assets/keyboard/s key.png",
+    "a_key":"assets/keyboard/a key.png",
+    "d_key":"assets/keyboard/d key.png",
+    "space_key":"assets/keyboard/space key.png"
 }
-Al_KEY={
-    "w_key":"final-project-team-hagil/assets/keyboard/w key(after).png",
-    "s_key":"final-project-team-hagil/assets/keyboard/s key(after).png",
-    "a_key":"final-project-team-hagil/assets/keyboard/a key(after).png",
-    "d_key":"final-project-team-hagil/assets/keyboard/d key(after).png",
-    "space_key":"final-project-team-hagil/assets/keyboard/space key(after).png"
+AL_KEY={
+    "w_key":"assets/keyboard/w key(after).png",
+    "s_key":"assets/keyboard/s key(after).png",
+    "a_key":"assets/keyboard/a key(after).png",
+    "d_key":"assets/keyboard/d key(after).png",
+    "space_key":"assets/keyboard/space key(after).png"
     
 }
 FALSE_KEY={
-    "w_key":"final-project-team-hagil/assets/keyboard/w key(wrong).png",
-    "s_key":"final-project-team-hagil/assets/keyboard/s key(wrong).png",
-    "a_key":"final-project-team-hagil/assets/keyboard/a key(wrong).png",
-    "d_key":"final-project-team-hagil/assets/keyboard/d key(wrong).png"
+    "w_key":"assets/keyboard/w key(wrong).png",
+    "s_key":"assets/keyboard/s key(wrong).png",
+    "a_key":"assets/keyboard/a key(wrong).png",
+    "d_key":"assets/keyboard/d key(wrong).png"
 }    
 BG={
-    "dreamy":"final-project-team-hagil/assets/background/dreamy.png",
-    "mountain":"final-project-team-hagil/assets/background/mountain.png",
-    "nightsky":"final-project-team-hagil/assets/background/nightsky.png",
-    "redsky":"final-project-team-hagil/assets/background/redsky.png",
-    "sunset":"final-project-team-hagil/assets/background/sunset.png"
+    "dreamy":"assets/background/dreamy.png",
+    "mountain":"assets/background/mountain.png",
+    "nightsky":"assets/background/nightsky.png",
+    "redsky":"assets/background/redsky.png",
+    "sunset":"assets/background/sunset.png"
 }
 TASKBAR={
-    "mountain":"final-project-team-hagil/assets/taskbar/mountain.png",
-    "nightsky":"final-project-team-hagil/assets/taskbar/nightsky.png",
-    "redsky":"final-project-team-hagil/assets/taskbar/redsky+dreamy.png",
-    "dreamy":"final-project-team-hagil/assets/taskbar/redsky+dreamy.png",
-    "sunset":"final-project-team-hagil/assets/taskbar/sunset.png",
+    "mountain":"assets/taskbar/mountain.png",
+    "nightsky":"assets/taskbar/nightsky.png",
+    "redsky":"assets/taskbar/redsky+dreamy.png",
+    "dreamy":"assets/taskbar/redsky+dreamy.png",
+    "sunset":"assets/taskbar/sunset.png"
 }
 
 class Taskbar(pygame.sprite.Sprite):
@@ -146,44 +148,22 @@ def create_key(lib):
     use_key=pygame.image.load(lib)
     return use_key
 
-stop_thread=threading.Event()
-def thread_background():
-    
-    random_value=choose_random(BG)
-    background = pygame.image.load(BG[random_value])
-    background_x=0
-    Threading=True
-    while RUNNING:
-        background_width=background.get_width()
-        background_x -= 1
-        if background_x <= -background_width:
-            background_x = 0
 
-                
-        pygame.time.wait(10)
-        screen.blit(background, (background_x, 0))
-        screen.blit(background, (background_x + background_width, 0))
-        if stop_thread.is_set():
-            Threading=False
- 
-
-thread = threading.Thread(target=thread_background)
 
 def mainloop():
-    clock=pygame.time.Clock()
-    
-    obstacle_group=pygame.sprite.Group()
-
+    background_x=0
     taskbar_group=pygame.sprite.Group()# image size should be < 686x52px 
     random_value=choose_random(BG)
+    background = pygame.image.load(BG[random_value])
+    bar_background = pygame.image.load(BG[random_value])
+    test=pygame.image.load(AL_KEY["d_key"])
     taskbar=Taskbar(TASKBAR[random_value],540,665)
     taskbar_group.add(taskbar)
+    obstacle_group=pygame.sprite.Group()
+
+    screen.blit(background, (background_x, 0))
     
-    RUNNING=True
-    
-    #thread.start()
-    total_win=[]
-    total_lose=[]
+    RUNNING = True
     
     aim=1000
     aim2=0
@@ -261,29 +241,29 @@ def mainloop():
                     sys.exit()
                 elif event.type==pygame.KEYDOWN:
                     if event.key==pygame.K_w:
-                        screen.blit(create_key(Al_KEY["w_key"]),(SCREEN_HEIGHT-1000,SCREEN_WIDTH-100))
+                        screen.blit(create_key(AL_KEY["w_key"]),(SCREEN_HEIGHT-1000,SCREEN_WIDTH-100))
                         key.append("w_key")
                         
                         print("up")
                     elif event.key==pygame.K_s:
                         key.append("s_key")
                     
-                        screen.blit(create_key(Al_KEY["s_key"]),(SCREEN_HEIGHT-1000,SCREEN_WIDTH-55))
+                        screen.blit(create_key(AL_KEY["s_key"]),(SCREEN_HEIGHT-1000,SCREEN_WIDTH-55))
                     elif event.key==pygame.K_a:
-                        screen.blit(create_key(Al_KEY["a_key"]),(SCREEN_HEIGHT-1050,SCREEN_WIDTH-55))
+                        screen.blit(create_key(AL_KEY["a_key"]),(SCREEN_HEIGHT-1050,SCREEN_WIDTH-55))
                         key.append("a_key")
                     elif event.key==pygame.K_d:
-                        screen.blit(create_key(Al_KEY["d_key"]),(SCREEN_HEIGHT-950,SCREEN_WIDTH-55))
+                        screen.blit(create_key(AL_KEY["d_key"]),(SCREEN_HEIGHT-950,SCREEN_WIDTH-55))
                         key.append("d_key")             
                     elif event.key==pygame.K_SPACE:
                         key.append("submit")
-                        screen.blit(create_key(Al_KEY["space_key"]),(SCREEN_HEIGHT-150,SCREEN_WIDTH-100))
+                        screen.blit(create_key(AL_KEY["space_key"]),(SCREEN_HEIGHT-150,SCREEN_WIDTH-100))
                     pygame.display.flip()
                     obstacle_group.empty()
                 
                 
                     if key[-1]==answer[0]:        
-                        obstacle.update(Al_KEY[answer[0]],coordinate[z],y_coord)
+                        obstacle.update(AL_KEY[answer[0]],coordinate[z],y_coord)
                         right_ans+=1
                         obstacle_group.add(obstacle)
                         obstacle_group.draw(screen)
@@ -318,17 +298,13 @@ def mainloop():
                             Testing=False
                             RUNNING=False
                         pygame.time.wait(20) 
-                        total_win.append(right_ans)
-                        total_lose.append(wrong_ans)
                         key=[]  
                         Testing=False
 
                     
 
                 pygame.display.flip()
-            pygame.display.flip()
-            clock.tick(60)
-    print(total_lose,total_win)     
+            pygame.display.flip()   
     
     time.sleep(10)
                         
