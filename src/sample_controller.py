@@ -49,14 +49,12 @@ class Controller:
     self.taskbar_group=Group()# image size should be < 686x52px 
     
     
-    self.aim=500
-    self.main_aim=self.aim
+    self.aim=0
+    self.main_aim=0
     self.aim2=0
     RUNNING=True
     
     #thread.start()
-    self.total_win=[]
-    self.total_lose=[]
     self.state="gameloop"
     self.newkey=["w_key","s_key","a_key","d_key"]    
     self.ICONS={
@@ -69,6 +67,9 @@ class Controller:
     "Careless":"final-project-team-hagil/assets/musics/careless.wav",
     "Cross me":"final-project-team-hagil/assets/musics/Cross me.wav",
     "I don't care":"final-project-team-hagil/assets/musics/I don't care.wav",
+    "Shake it off":"final-project-team-hagil/assets/musics/Shake it off.wav",
+    "You belong with me":"final-project-team-hagil/assets/musics/You belong with me.wav",
+    "greater than one":"final-project-team-hagil/assets/musics/greater than one.wav",
     }
     self.OG_KEY={
     "w_key":"final-project-team-hagil/assets/keyboard/w key.png",
@@ -143,12 +144,23 @@ class Controller:
   def gameloop(self):
     self.start=True    
     self.font=pygame.font.Font("final-project-team-hagil/assets/Caveat.ttf",49)    
-    self.music = pygame.mixer.music.load(self.SONG["I don't care"])
+    self.music = pygame.mixer.music.load(self.SONG["greater than one"])
+    self.song_time=song_length(self.SONG["greater than one"])
+    if self.song_time>100:
+        if self.song_time>=240:
+            self.aim=500
+        elif self.song_time>=180:
+            self.aim=400
+        elif self.song_time>=120:
+            self.aim=300
+        else:
+            self.aim=200
+    self.main_aim=self.aim
     pygame.mixer.music.set_volume(0.2)
     self.random_value=choose_random(self.BG)
     self.background=pygame.image.load(self.BG[self.random_value])
     self.screen.blit(self.background,(0,0))
-    self.taskbar=Taskbar(self.TASKBAR[self.random_value],540,665)
+    self.taskbar=Taskbar(self.TASKBAR[self.random_value],540,360)
     self.taskbar_group.add(self.taskbar)
     while self.start:
         for k in self.ICONS:
@@ -159,7 +171,6 @@ class Controller:
             self.screen.blit(self.background,(0,0))
         self.start=False
     self.start_time=time.time()
-    self.song_time=song_length(self.SONG["I don't care"])
     pygame.mixer.music.play(-1)
     while self.RUNNING:
         self.current_time=time.time()
@@ -188,7 +199,7 @@ class Controller:
         pygame.display.flip()  
         self.obstacle_sequence =random.randrange(3,11)
         self.x_coord=evaluate_xdistance(self.obstacle_sequence)
-        self.y_coord=640
+        self.y_coord=340
         self.distance=evaluate_ydistance(self.obstacle_sequence)
         self.answer=[]
         self.coordinate=[]
