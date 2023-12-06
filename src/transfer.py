@@ -20,10 +20,12 @@ pygame.display.flip()
 # Set Music
 music = pygame.mixer.music.load("final-project-team-hagil/assets/musics/careless.wav")
 pygame.mixer.music.set_volume(0.2)
-font=pygame.font.Font(None,49)
+font=pygame.font.Font("final-project-team-hagil/assets/Caveat.ttf",49)
 
 SONG={
-    "Careless":"final-project-team-hagil/assets/musics/careless.wav"
+    "Careless":"final-project-team-hagil/assets/musics/careless.wav",
+    "Cross me":"final-project-team-hagil/assets/musics/careless.wav",
+    "I dont't care":"final-project-team-hagil/assets/musics/careless.wav"
     
 }
 
@@ -162,8 +164,9 @@ def mainloop():
     screen.blit(background, (background_x, 0))
     
     RUNNING = True
-    main_aim=600
-    aim=600
+
+    aim=400
+    main_aim=aim
     aim2=0
     start_time=time.time()
     song_time=song_length("final-project-team-hagil/assets/musics/careless.wav")
@@ -177,15 +180,13 @@ def mainloop():
         wrong_ans=0
         pygame.display.update()
         screen.fill("white")
-
-        msg2="You miss "+ str(aim2)
-        msg= "Your aim is "+ str(aim)
+        msg2=str(aim2) + " misses"
+        msg= str(int(aim))+" combos left"
         text2=font.render(msg2,True,"red")
-        text=font.render(msg,True,"blue")
+        text=font.render(msg,True,"white")
         screen.blit(background,(0,0))
-        screen.blit(text,(SCREEN_HEIGHT/4,0))
-        screen.blit(text2,(SCREEN_HEIGHT/4,100))
-        
+        screen.blit(text,(0,0))
+        screen.blit(text2,(0,50))
         OG_key()
         
         for event in pygame.event.get():
