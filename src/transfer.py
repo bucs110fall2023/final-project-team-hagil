@@ -1,8 +1,10 @@
 import pygame 
 import random
 import time
-import threading
 import sys
+import mutagen
+from mutagen.wave import WAVE
+
 
 
 # Initialize Pygame
@@ -18,15 +20,8 @@ pygame.display.flip()
 
 # Set Music
 music = pygame.mixer.music.load("final-project-team-hagil/assets/musics/careless.mp3")
-a=pygame.mixer.Sound("final-project-team-hagil/assets/musics/careless.mp3")
-print(a.get_length())
 pygame.mixer.music.play(-1)
 pygame.mixer.music.set_volume(0.2)
-song_length=music.__getstate__
-print(song_length)
-
-
-
 font=pygame.font.Font(None,49)
 
 OG_KEY={
@@ -102,11 +97,6 @@ class Group(pygame.sprite.Group):
         
 
 
-def evaluate_time(current_time,start_time,obstacle_group):
-    if current_time-start_time>1000:
-        obstacle_group.empty()
-        Testing=False
-                  
                     
 def choose_random(list_name):
     selection=[]
@@ -165,7 +155,7 @@ def mainloop():
     screen.blit(background, (background_x, 0))
     
     RUNNING = True
-    
+    main_aim=600
     aim=600
     aim2=0
     start_time=time.time()
@@ -301,8 +291,7 @@ def mainloop():
                         Testing=False
             
             doing_time=time.time()
-            if evaluate_time(create_time,doing_time)>3:
-                
+            if evaluate_time(create_time,doing_time)>6:
                 aim=aim-right_ans
                 aim2=aim2+wrong_ans
                 if aim2>10:
@@ -318,7 +307,7 @@ def mainloop():
 
                 pygame.display.flip()
             pygame.display.flip()
-       
+    print(main_aim-aim)   
     screen.fill("yellow")
     pygame.display.flip()
     pygame.time.wait(1000)                    
