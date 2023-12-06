@@ -23,7 +23,7 @@ pygame.mixer.music.set_volume(0.5)
 
 
 
-
+font=pygame.font.Font(None,49)
 
 OG_KEY={
     "w_key":"final-project-team-hagil/assets/keyboard/w key.png",
@@ -185,13 +185,23 @@ def mainloop():
     total_win=[]
     total_lose=[]
     
+    aim=1000
+    aim2=0
     while RUNNING:
     
         right_ans=0
         wrong_ans=0
         pygame.display.update()
-    
+        screen.fill("white")
+        msg2="You miss "+ str(aim2)
+        msg= "Your aim is "+ str(aim)
+        text2=font.render(msg2,True,"red")
+        text=font.render(msg,True,"blue")
+        screen.blit(text,(SCREEN_HEIGHT/4,0))
+        screen.blit(text2,(SCREEN_HEIGHT/4,100))
+        
         OG_key()
+        
         for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     
@@ -239,7 +249,6 @@ def mainloop():
         Testing=True
     
         while Testing:
-            current_time=pygame.time.get_ticks()
             
             OG_key()
             
@@ -271,10 +280,7 @@ def mainloop():
                         screen.blit(create_key(Al_KEY["space_key"]),(SCREEN_HEIGHT-150,SCREEN_WIDTH-100))
                     pygame.display.flip()
                     obstacle_group.empty()
-                    
-                    eva_time=pygame.time.get_ticks()
-                    evaluate_time(current_time,eva_time,obstacle_group)
-                    
+                
                 
                     if key[-1]==answer[0]:        
                         obstacle.update(Al_KEY[answer[0]],coordinate[z],y_coord)
@@ -284,33 +290,39 @@ def mainloop():
                         z+=1
                         answer.pop(0)
                         obstacle_group.empty()
-                    elif key[-1]!=answer[0]:        
-                        obstacle.update(FALSE_KEY[answer[0]],coordinate[z],y_coord)
-                        wrong_ans+=1
-                        obstacle_group.add(obstacle)
-                        obstacle_group.draw(screen)
-                        z+=1
-                        answer.pop(0)
-                        obstacle_group.empty()
-                    eva_time=pygame.time.get_ticks()
-                    evaluate_time(eva_time,current_time,obstacle_group)
-                    
-                    pygame.display.flip()
+                    elif key[-1]!=answer[0]: 
+                        if key[-1]=="submit":
+                            Testing=False
+                        else:       
+                            obstacle.update(FALSE_KEY[answer[0]],coordinate[z],y_coord)
+                            wrong_ans+=1
+                            obstacle_group.add(obstacle)
+                            obstacle_group.draw(screen)
+                            z+=1
+                            answer.pop(0)
+                            obstacle_group.empty()
+                        pygame.display.flip()
                     if key[-1]=="submit":
+
+                        aim=aim-right_ans
+                        aim2=aim2+wrong_ans
+                        if aim2>50:
+                            RUNNING=False
                         total_win.append(right_ans)
                         total_lose.append(wrong_ans)
                         Testing=False
                     elif  answer==[]:
+                        aim=aim-right_ans
+                        aim2=aim2+wrong_ans
+                        if aim2>50:
+                            Testing=False
+                            RUNNING=False
                         pygame.time.wait(20) 
                         total_win.append(right_ans)
                         total_lose.append(wrong_ans)
                         key=[]  
                         Testing=False
 
-                    eva_time=pygame.time.get_ticks()
-                    
-                  
-                    
                     
 
                 pygame.display.flip()
