@@ -2,7 +2,6 @@ import pygame
 import random
 import time
 import sys
-import mutagen
 from mutagen.wave import WAVE
 
 
@@ -19,10 +18,14 @@ screen.fill("white")
 pygame.display.flip()
 
 # Set Music
-music = pygame.mixer.music.load("final-project-team-hagil/assets/musics/careless.mp3")
-pygame.mixer.music.play(-1)
+music = pygame.mixer.music.load("final-project-team-hagil/assets/musics/careless.wav")
 pygame.mixer.music.set_volume(0.2)
 font=pygame.font.Font(None,49)
+
+SONG={
+    "Careless":"final-project-team-hagil/assets/musics/careless.wav"
+    
+}
 
 OG_KEY={
     "w_key":"final-project-team-hagil/assets/keyboard/w key.png",
@@ -97,7 +100,11 @@ class Group(pygame.sprite.Group):
         
 
 
-                    
+
+def song_length(song_path):
+    audio =WAVE(song_path)
+    length=audio.info.length
+    return length         
 def choose_random(list_name):
     selection=[]
     chosen_value=()
@@ -159,10 +166,12 @@ def mainloop():
     aim=600
     aim2=0
     start_time=time.time()
+    song_time=song_length("final-project-team-hagil/assets/musics/careless.wav")
+    pygame.mixer.music.play(-1)
     while RUNNING:
         current_time=time.time()
         elapsed_time=evaluate_time(start_time,current_time)
-        if elapsed_time>300:
+        if elapsed_time>song_time:
             RUNNING=False
         right_ans=0
         wrong_ans=0
@@ -185,12 +194,7 @@ def mainloop():
                     #stop_thread.is_set()
                     RUNNING = False
                     sys.exit()
-        current_time=pygame.time.get_ticks()
-        elapsed_time=evaluate_time(start_time,current_time)
-        if elapsed_time>5000:
-            RUNNING=False
         taskbar_group.draw(screen)
-        
         pygame.display.flip()
         obstacle_sequence =random.randrange(3,11)
         x_coord=evaluate_xdistance(obstacle_sequence)
@@ -200,22 +204,15 @@ def mainloop():
         coordinate=[]
         key=["state"]
         z=0
- 
-                
         print(key)      
         pygame.display.update()
         for i in range(obstacle_sequence):
             newkey=["w_key","s_key","a_key","d_key"]
             generatekey=(random.choice(newkey))
             answer.append(generatekey)
-                
             obstacle=Obstacle(OG_KEY[generatekey],x_coord,y_coord)
             coordinate.append(x_coord)
-                
             obstacle_group.add(obstacle)
-                
-                
-
             pygame.time.wait(50)
             pygame.display.update()
             x_coord+=distance
@@ -289,7 +286,6 @@ def mainloop():
                             RUNNING=False
                         pygame.time.wait(20) 
                         Testing=False
-            
             doing_time=time.time()
             if evaluate_time(create_time,doing_time)>6:
                 aim=aim-right_ans
@@ -302,7 +298,7 @@ def mainloop():
                 obstacle_group.empty()
             current_time=time.time()
             elapsed_time=evaluate_time(start_time,current_time)
-            if elapsed_time>300:
+            if elapsed_time>song_time:
                 RUNNING=False
 
                 pygame.display.flip()
