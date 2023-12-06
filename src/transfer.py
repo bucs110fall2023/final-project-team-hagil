@@ -7,7 +7,6 @@ import sys
 
 # Initialize Pygame
 pygame.init()
-
 # Set size of Screen Size
 SCREEN_WIDTH = 720
 SCREEN_HEIGHT = 1080
@@ -169,11 +168,11 @@ def mainloop():
     
     aim=600
     aim2=0
-    start_time=pygame.time.get_ticks()
+    start_time=time.time()
     while RUNNING:
-        current_time=pygame.time.get_ticks()
+        current_time=time.time()
         elapsed_time=evaluate_time(start_time,current_time)
-        if elapsed_time>5000:
+        if elapsed_time>300:
             RUNNING=False
         right_ans=0
         wrong_ans=0
@@ -231,7 +230,7 @@ def mainloop():
             pygame.display.update()
             x_coord+=distance
             obstacle_group.draw(screen)
-            
+        create_time=time.time()    
         pygame.display.update()
         print(answer)
         print(answer[0])
@@ -240,14 +239,11 @@ def mainloop():
 
     
         while Testing:
-            if not pygame.mixer.music.get_busy():
-                RUNNING = False
         
             OG_key()
             
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
-                    
                     #stop_thread.is_set()
                     RUNNING = False
                     Testing=False
@@ -256,11 +252,9 @@ def mainloop():
                     if event.key==pygame.K_w:
                         screen.blit(create_key(AL_KEY["w_key"]),(SCREEN_HEIGHT-1000,SCREEN_WIDTH-100))
                         key.append("w_key")
-                        
                         print("up")
                     elif event.key==pygame.K_s:
                         key.append("s_key")
-                    
                         screen.blit(create_key(AL_KEY["s_key"]),(SCREEN_HEIGHT-1000,SCREEN_WIDTH-55))
                     elif event.key==pygame.K_a:
                         screen.blit(create_key(AL_KEY["a_key"]),(SCREEN_HEIGHT-1050,SCREEN_WIDTH-55))
@@ -300,18 +294,27 @@ def mainloop():
                             RUNNING=False
                     elif  answer==[]:
                         aim=aim-right_ans
-                        
                         aim2=aim2+wrong_ans
                         if aim2>10:
                             RUNNING=False
                         pygame.time.wait(20) 
                         Testing=False
-            start_time=pygame.time.get_ticks()
-            if current_time-start_time>5:
-                RUNNING=False
             
-
-                    
+            doing_time=time.time()
+            if evaluate_time(create_time,doing_time)>3:
+                
+                aim=aim-right_ans
+                aim2=aim2+wrong_ans
+                if aim2>10:
+                    RUNNING=False
+                    pygame.time.wait(20) 
+                    Testing=False
+                Testing=False
+                obstacle_group.empty()
+            current_time=time.time()
+            elapsed_time=evaluate_time(start_time,current_time)
+            if elapsed_time>300:
+                RUNNING=False
 
                 pygame.display.flip()
             pygame.display.flip()
