@@ -148,10 +148,8 @@ def OG_key():
 def create_key(lib):
     use_key=pygame.image.load(lib)
     return use_key
-
 def evaluate_time(start_time,current_time):
     return current_time-start_time
-
 def mainloop():
     background_x=0
     taskbar_group=pygame.sprite.Group()# image size should be < 686x52px 
@@ -179,7 +177,6 @@ def mainloop():
         right_ans=0
         wrong_ans=0
         pygame.display.update()
-        screen.fill("white")
         msg2=str(aim2) + " misses"
         msg= str(int(aim))+" combos left"
         text2=font.render(msg2,True,"red")

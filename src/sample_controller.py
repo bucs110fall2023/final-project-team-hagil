@@ -49,7 +49,7 @@ class Controller:
     self.taskbar_group=Group()# image size should be < 686x52px 
     
     
-    self.aim=400
+    self.aim=500
     self.main_aim=self.aim
     self.aim2=0
     RUNNING=True
@@ -59,10 +59,16 @@ class Controller:
     self.total_lose=[]
     self.state="gameloop"
     self.newkey=["w_key","s_key","a_key","d_key"]    
+    self.ICONS={
+        "#3":"final-project-team-hagil/assets/others icons/#3.png",
+        "#2":"final-project-team-hagil/assets/others icons/#2.png",
+        "#1":"final-project-team-hagil/assets/others icons/#1.png",
+        "go":"final-project-team-hagil/assets/others icons/go.png",
+    }
     self.SONG={
     "Careless":"final-project-team-hagil/assets/musics/careless.wav",
-    "Cross me":"final-project-team-hagil/assets/musics/careless.wav",
-    "I dont't care":"final-project-team-hagil/assets/musics/careless.wav"
+    "Cross me":"final-project-team-hagil/assets/musics/Cross me.wav",
+    "I don't care":"final-project-team-hagil/assets/musics/I don't care.wav",
     }
     self.OG_KEY={
     "w_key":"final-project-team-hagil/assets/keyboard/w key.png",
@@ -135,26 +141,31 @@ class Controller:
       #redraw
       
   def gameloop(self):
-    
+    self.start=True    
     self.font=pygame.font.Font("final-project-team-hagil/assets/Caveat.ttf",49)    
-    self.music = pygame.mixer.music.load("final-project-team-hagil/assets/musics/careless.wav")
+    self.music = pygame.mixer.music.load(self.SONG["I don't care"])
     pygame.mixer.music.set_volume(0.2)
     self.random_value=choose_random(self.BG)
     self.background=pygame.image.load(self.BG[self.random_value])
     self.screen.blit(self.background,(0,0))
     self.taskbar=Taskbar(self.TASKBAR[self.random_value],540,665)
-    self.taskbar_group.add(self.taskbar) 
-
+    self.taskbar_group.add(self.taskbar)
+    while self.start:
+        for k in self.ICONS:
+            self.icon=pygame.image.load(self.ICONS[k])
+            self.screen.blit(self.icon,(self.SCREEN_HEIGHT/2-20,self.SCREEN_WIDTH-650))
+            pygame.display.flip()
+            pygame.time.wait(1000)
+            self.screen.blit(self.background,(0,0))
+        self.start=False
     self.start_time=time.time()
-    
-    self.song_time=song_length("final-project-team-hagil/assets/musics/careless.wav")
-        
+    self.song_time=song_length(self.SONG["I don't care"])
     pygame.mixer.music.play(-1)
     while self.RUNNING:
         self.current_time=time.time()
         self.elapsed_time=evaluate_time(self.start_time,self.current_time)
         self.OG_key()
-        if self.elapsed_time>self.song_time:
+        if self.elapsed_time>self.song_time-5:
             self.RUNNING=False
         self.right_ans=0
         self.wrong_ans=0
@@ -234,8 +245,6 @@ class Controller:
                         self.screen.blit(pygame.image.load(self.Al_KEY["space_key"]),(self.SCREEN_HEIGHT-150,self.SCREEN_WIDTH-100))
                     pygame.display.flip()
                     self.obstacle_group.empty()
-                    
-                
                     if self.key[-1]==self.answer[0]:        
                         self.obstacle.update(self.Al_KEY[self.answer[0]],self.coordinate[self.z],self.y_coord)
                         self.right_ans+=1
@@ -274,17 +283,18 @@ class Controller:
                 self.aim=self.aim-self.right_ans
                 self.aim2=self.aim2+self.wrong_ans
                 if self.aim2>10:
-                    self.RUNNING=False
+                    self.key=[]
+                    self.RUNNINaG=False
                     pygame.time.wait(20) 
                 self.Testing=False
                 self.obstacle_group.empty()
             self.current_time=time.time()
             elapsed_time=evaluate_time(self.start_time,self.current_time)
-            if elapsed_time>self.song_time:
+            if elapsed_time>self.song_time-5:
                 self.RUNNING=False
                 pygame.display.flip()
             pygame.display.flip()
-    print(self.total_lose,self.total_win)     
+    print(self.main_aim-self.aim)     
     
         
  
