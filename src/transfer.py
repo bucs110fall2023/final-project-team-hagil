@@ -164,11 +164,6 @@ def gameoverloop(x,y):
                 Ending=False
 
 def mainloop():
-    screen.fill((52, 78, 91)) # fill with the background later
-    if game_start == True:
-            game_start = False
-    else:
-        start_button.draw(screen)
 
 
 
