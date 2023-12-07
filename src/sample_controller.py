@@ -1,8 +1,9 @@
 import pygame
 import random
-from taskbar import Taskbar
-from obstacle import Obstacle
-from group import Group
+from src.taskbar import Taskbar
+from src.obstacle import Obstacle
+from src.group import Group
+from src.button import Button
 from mutagen.wave import WAVE
 import time
 def song_length(song_path):
@@ -45,14 +46,13 @@ class Controller:
   def __init__(self):
     
     self.obstacle_group=Group()
-
+    self.state=()
     self.taskbar_group=Group()# image size should be < 686x52px 
     self.Ending=True
     self.aim=0
     self.main_aim=0
     self.aim2=0
     RUNNING=True
-    
     #thread.start()
     self.state="gameloop"
     self.newkey=["w_key","s_key","a_key","d_key"]    
@@ -110,6 +110,7 @@ class Controller:
     self.SCREEN_SIZE = (self.SCREEN_HEIGHT, self.SCREEN_WIDTH)
     self.RUNNING=True
     self.Testing=True
+    self.working=True
   def OG_key(self):
       
     
@@ -121,12 +122,19 @@ class Controller:
   def mainloop(self):
         pygame.init()
         self.screen=pygame.display.set_mode([self.SCREEN_HEIGHT,self.SCREEN_WIDTH])
-        self.screen.fill("white")
-        
-        pygame.display.flip()
-        pygame.time.wait(60)
-        self.gameloop()
-        self.gameoverloop()
+        self.start_img=pygame.image.load("final-project-team-hagil/assets/others icons/start.png").convert_alpha()
+        self.start_button=Button(415,500,self.start_img,0.2)
+        self.state="mainscreen"
+        while self.working:
+            for event in pygame.event.get():
+                if event.type ==pygame.QUIT:
+                    self.working=False
+            if self.state=="mainscreen":
+                self.start_screen()
+            elif self.state=="gameloop":
+                self.gameloop()
+            elif self.state=="gameoverloop":
+                self.gameoverloop()
     #select state loop
   
   ### below are some sample loop states ###
@@ -138,12 +146,36 @@ class Controller:
       #update data
 
       #redraw
-      
+  
+  def start_screen(self):
+    self.run = True
+    while self.run:
+        self.main_menu = pygame.image.load("final-project-team-hagil/assets/main_menu.png")
+        self.main_screen = pygame.image.load("final-project-team-hagil/assets/main_screen.jpg")
+        self.screen.blit(self.main_screen, (0, 0))
+        self.start_button.draw(self.screen)
+        pygame.display.flip()
+        for event in pygame.event.get():
+            if event.type == pygame.MOUSEBUTTONUP:
+                self.run=False
+                self.state="gameloop"
+            elif event.type == pygame.QUIT:
+                self.run = False
+                self.working=False
+                
+    
   def gameloop(self):
+    self.aim=0
+    self.main_aim=0
+    self.aim2=0
+    self.obstacle_group.empty()
+    self.RUNNING=True
+    self.Testing=True
     self.start=True    
-    self.font=pygame.font.Font("final-project-team-hagil/assets/Caveat.ttf",49)    
-    self.music = pygame.mixer.music.load(self.SONG["greater than one"])
-    self.song_time=song_length(self.SONG["greater than one"])
+    self.font=pygame.font.Font("final-project-team-hagil/assets/Caveat.ttf",49) 
+    self.random_song=choose_random(self.SONG)   
+    self.music = pygame.mixer.music.load(self.SONG[self.random_song])
+    self.song_time=song_length(self.SONG[self.random_song])
     if self.song_time>100:
         if self.song_time>=240:
             self.aim=500
@@ -163,6 +195,7 @@ class Controller:
     for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     self.RUNNING = False
+                    self.working=False
     while self.start:
         for k in self.ICONS:
             self.icon=pygame.image.load(self.ICONS[k])
@@ -235,6 +268,7 @@ class Controller:
                     #stop_thread.is_set()
                     self.RUNNING = False
                     self.Testing=False
+                    self.working=False
                 elif event.type==pygame.KEYDOWN:
                     if event.key==pygame.K_w:
                         self.screen.blit(pygame.image.load(self.Al_KEY["w_key"]),(self.SCREEN_HEIGHT-1000,self.SCREEN_WIDTH-100))
@@ -278,12 +312,14 @@ class Controller:
                         self.aim2=self.aim2+self.wrong_ans
                         if self.aim2>10:
                             self.RUNNING=False
+                            pygame.mixer_music.stop()
                         self.Testing=False
                     elif  self.answer==[]:
                         self.aim=self.aim-self.right_ans
                         self.aim2=self.aim2+self.wrong_ans
                         if self.aim2>10:
                             self.RUNNING=False
+                            pygame.mixer_music.stop()
                         pygame.time.wait(20)
                         self.Testing=False    
             self.solving_time=time.time()                
@@ -304,6 +340,7 @@ class Controller:
                 self.RUNNING=False
                 pygame.display.flip()
             pygame.display.flip()     
+    self.state="gameoverloop"
   def gameoverloop(self):
         print(self.main_aim-self.aim)
         self.Ending=True
@@ -329,6 +366,8 @@ class Controller:
         while self.Ending:
             self.screen.fill("plum1")
             self.screen.blit(pygame.image.load("final-project-team-hagil/assets/game_over (1).png"),(self.SCREEN_HEIGHT-750,0))
+            self.home_rect=pygame.Rect(0,0,100,90)
+            self.reset_rect=pygame.Rect(980,0,100,100)
             self.screen.blit(self.text,(self.SCREEN_HEIGHT-670,self.SCREEN_WIDTH/2-150))
             self.screen.blit(self.text2,(self.SCREEN_HEIGHT-740,self.SCREEN_WIDTH/2-100))
             self.screen.blit(self.text3,(self.SCREEN_HEIGHT-720,self.SCREEN_WIDTH/2-50))
@@ -342,12 +381,15 @@ class Controller:
             for event in pygame.event.get():
                 if event.type==pygame.QUIT:
                     self.Ending=False
+                    self.working=False
                 elif event.type == pygame.MOUSEBUTTONDOWN: 
-                    if self.home.collidepoint(event.pos):
+                    if self.home_rect.collidepoint(event.pos):
                         if event.button==1:
                             self.Ending=False
-                    elif self.reset.collidepoint(event.pos):
+                            self.state="mainscreen"
+                    elif self.reset_rect.collidepoint(event.pos):
                         if event.button==1:    
                             self.Ending=False
+                            self.state="gameloop"
 control=Controller()
 control.mainloop()
