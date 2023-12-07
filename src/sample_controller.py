@@ -298,6 +298,8 @@ class Controller:
                 self.obstacle_group.empty()
             self.current_time=time.time()
             elapsed_time=evaluate_time(self.start_time,self.current_time)
+            if self.aim<=0:
+                self.aim2=0
             if elapsed_time>self.song_time-5:
                 self.RUNNING=False
                 pygame.display.flip()
@@ -305,14 +307,47 @@ class Controller:
   def gameoverloop(self):
         print(self.main_aim-self.aim)
         self.Ending=True
+        self.home=Obstacle("final-project-team-hagil/assets/home.png",0,0)
+        self.reset=Obstacle("final-project-team-hagil/assets/reset.png",980,0)
+        self.obstacle_group.empty()
+        self.font=pygame.font.Font("final-project-team-hagil/assets/San serif.otf",45)
+        self.end_msg= "Target: "+ str(self.main_aim)
+        self.end_msg2= "Finised combos: " + str(self.main_aim-self.aim)
+        self.end_msg3=" Misses combo: " + str(self.aim2)
+        self.text=self.font.render(self.end_msg,True,"cadetblue")
+        self.text2=self.font.render(self.end_msg2, True, "cadetblue")
+        self.text3=self.font.render(self.end_msg3, True, "cadetblue")
+        
+        if self.aim<=0:
+            self.announcement=pygame.image.load("final-project-team-hagil/assets/you win.png")
+        elif self.aim>=10:
+            self.announcement=pygame.image.load("final-project-team-hagil/assets/you lose.png")
+        elif self.aim2>0 or self.aim >0:
+            self.announcement=pygame.image.load("final-project-team-hagil/assets/you lose.png")
+        else:
+            self.announcement=pygame.image.load("final-project-team-hagil/assets/you lose.png")
         while self.Ending:
-            background=pygame.image.load("final-project-team-hagil/assets/game_over_screen.jpg")
-            scoreboard=pygame.image.load("final-project-team-hagil/assets/scoreboard.jpg")
-            self.screen.blit(background,(0,0))
+            self.screen.fill("plum1")
+            self.screen.blit(pygame.image.load("final-project-team-hagil/assets/game_over (1).png"),(self.SCREEN_HEIGHT-750,0))
+            self.screen.blit(self.text,(self.SCREEN_HEIGHT-670,self.SCREEN_WIDTH/2-150))
+            self.screen.blit(self.text2,(self.SCREEN_HEIGHT-740,self.SCREEN_WIDTH/2-100))
+            self.screen.blit(self.text3,(self.SCREEN_HEIGHT-720,self.SCREEN_WIDTH/2-50))
+            self.screen.blit(self.announcement,(self.SCREEN_HEIGHT-850,self.SCREEN_WIDTH/2))
+            self.obstacle_group.add(self.home)
+            self.obstacle_group.draw(self.screen)
+            self.obstacle_group.add(self.reset)
+            self.obstacle_group.draw(self.screen)
             pygame.display.flip()
-            
+            pygame.time.wait(300)
             for event in pygame.event.get():
                 if event.type==pygame.QUIT:
                     self.Ending=False
+                elif event.type == pygame.MOUSEBUTTONDOWN: 
+                    if self.home.collidepoint(event.pos):
+                        if event.button==1:
+                            self.Ending=False
+                    elif self.reset.collidepoint(event.pos):
+                        if event.button==1:    
+                            self.Ending=False
 control=Controller()
 control.mainloop()
