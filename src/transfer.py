@@ -150,6 +150,18 @@ def create_key(lib):
     return use_key
 def evaluate_time(start_time,current_time):
     return current_time-start_time
+
+
+def gameoverloop(x,y):
+    Ending=True
+    print(x-y)
+    while Ending:
+        background=pygame.image.load("final-project-team-hagil/assets/game_over_screen.jpg")
+        screen.blit(background,(0,0))
+        pygame.display.flip()
+        for event in pygame.event.get():
+            if event.type==pygame.QUIT:
+                Ending=False
 def mainloop():
     background_x=0
     taskbar_group=pygame.sprite.Group()# image size should be < 686x52px 
@@ -162,10 +174,10 @@ def mainloop():
     screen.blit(background, (background_x, 0))
     
     RUNNING = True
-
     aim=400
     main_aim=aim
     aim2=0
+    
     start_time=time.time()
     song_time=song_length("final-project-team-hagil/assets/musics/careless.wav")
     pygame.mixer.music.play(-1)
@@ -301,10 +313,6 @@ def mainloop():
 
                 pygame.display.flip()
             pygame.display.flip()
-    print(main_aim-aim)   
-    screen.fill("yellow")
-    pygame.display.flip()
-    pygame.time.wait(1000)                    
-mainloop()
- 
+    gameoverloop(main_aim,aim)
+mainloop()           
 

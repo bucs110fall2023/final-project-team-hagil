@@ -241,7 +241,6 @@ class Controller:
                     if event.key==pygame.K_w:
                         self.screen.blit(pygame.image.load(self.Al_KEY["w_key"]),(self.SCREEN_HEIGHT-1000,self.SCREEN_WIDTH-100))
                         self.key.append("w_key")
-                        print("up")
                     elif event.key==pygame.K_s:
                         self.key.append("s_key")
                         self.screen.blit(pygame.image.load(self.Al_KEY["s_key"]),(self.SCREEN_HEIGHT-1000,self.SCREEN_WIDTH-55))

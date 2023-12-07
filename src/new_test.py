@@ -1,8 +1,7 @@
 import mutagen
 from mutagen.wave import WAVE
 
-
-audio =WAVE("final-project-team-hagil/assets/musics/careless.wav")
-length=audio.info.length
-print(length)
-
+def song_length(song_path):
+    audio =WAVE(song_path)
+    length=audio.info.length
+    return length

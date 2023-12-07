@@ -2,3 +2,4 @@ pygame
 pygame-menu
 requests
 pytest
+audioread

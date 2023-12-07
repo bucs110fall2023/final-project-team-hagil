@@ -1,8 +1,9 @@
 import pygame
-#import your controller
-
+import src.taskbar
+from src.sample_controller import Controller
 def main():
-    pygame.init()
+    main=Controller
+    main.mainloop()
     #Create an instance on your controller object
     #Call your mainloop
     
