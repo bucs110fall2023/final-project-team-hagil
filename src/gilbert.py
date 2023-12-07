@@ -1,23 +1,107 @@
 import pygame
-import random
-import time
-import threading
-
+import button
 
 # Initialize Pygame
 pygame.init()
 
 
 # Set Size of Screen Size
-SCREEN_WIDTH = 1080
-SCREEN_HEIGHT = 720
+SCREEN_WIDTH = 800
+SCREEN_HEIGHT = 600
 SCREEN_SIZE = (SCREEN_WIDTH, SCREEN_HEIGHT)
 
 screen = pygame.display.set_mode(SCREEN_SIZE)
-screen.fill("white")
-pygame.display.flip()
+pygame.display.set_caption("Main Menu")
+
+# Game variables
+game_paused = False
+
+# Font
+font = pygame.font.SysFont("arialblack", 40)
+color = (255, 255, 255)
+
+# Load Images
+start_img = pygame.image.load("assets/others icons/start.png").convert_alpha()
+# exit_img = pygame.image.load("assets/others icons/exit.png").convert_alpha()
+
+# Create Instaces
+start_button = button.Button(304, 125, start_img, 0.2)
+# exit_button = button.Button(304, 325, exit_img, 0.2)
 
 
+def draw_text(text, font, color, x, y):
+    img = font.render(text, True, color)
+    screen.blit(img, (x, y))
+
+
+run = True
+while run:
+    screen.fill((52, 78, 91))
+
+    if game_paused == True:
+        draw_text("Press SPACE to pause", font, color, 160, 250)
+    else:
+        if start_button.draw(screen):
+            game_paused = False
+
+    for event in pygame.event.get():
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_SPACE:
+                game_paused = True
+        if event.type == pygame.QUIT:
+            run = False
+    
+    pygame.display.update()
+
+pygame.quit()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+"""
 # Load Musics
 track1 = pygame.mixer.music.load("assets/musics/careless.mp3")
 track1 = pygame.mixer.Sound("assets/musics/careless.mp3")
@@ -271,3 +355,4 @@ def main():
     time.sleep(10)
 
 main()
+"""
