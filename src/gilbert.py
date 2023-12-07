@@ -21,7 +21,7 @@ font = pygame.font.SysFont("arialblack", 40)
 color = (255, 255, 255)
 
 # Load Images
-start_img = pygame.image.load("assets/others icons/start.png").convert_alpha()
+start_img = pygame.image.load("final-project-team-hagil/assets/others icons/start.png").convert_alpha()
 # exit_img = pygame.image.load("assets/others icons/exit.png").convert_alpha()
 
 # Create Instaces

@@ -310,10 +310,7 @@ class Controller:
             scoreboard=pygame.image.load("final-project-team-hagil/assets/scoreboard.jpg")
             self.screen.blit(background,(0,0))
             pygame.display.flip()
-            pygame.time.wait(1000)
-            self.screen.blit(scoreboard,(300,50))
-            pygame.display.flip()
-            pygame.time.wait(10000)
+            
             for event in pygame.event.get():
                 if event.type==pygame.QUIT:
                     self.Ending=False
