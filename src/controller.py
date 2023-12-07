@@ -178,11 +178,11 @@ class Controller:
     self.song_time=song_length(self.SONG[self.random_song])
     if self.song_time>100:
         if self.song_time>=240:
-            self.aim=500
+            self.aim=450
         elif self.song_time>=180:
-            self.aim=400
+            self.aim=350
         elif self.song_time>=120:
-            self.aim=300
+            self.aim=250
         else:
             self.aim=200
     self.main_aim=self.aim
@@ -212,6 +212,7 @@ class Controller:
         self.OG_key()
         if self.elapsed_time>self.song_time-5:
             self.RUNNING=False
+            pygame.mixer_music.stop()
         self.right_ans=0
         self.wrong_ans=0
         pygame.display.update()             
@@ -338,6 +339,7 @@ class Controller:
                 self.aim2=0
             if elapsed_time>self.song_time-5:
                 self.RUNNING=False
+                pygame.mixer_music.stop()
                 pygame.display.flip()
             pygame.display.flip()     
     self.state="gameoverloop"
