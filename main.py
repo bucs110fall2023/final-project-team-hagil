@@ -1,7 +1,4 @@
 from src.sample_controller import Controller
-from src.submit_bar import Taskbar
-import pygame
-import sys
 
 
 

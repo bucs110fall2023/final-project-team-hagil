@@ -1,8 +1,8 @@
 import pygame
 import random
-from src.submit_bar import Taskbar
-from src.obstacle import Obstacle
-from src.group import Group
+from taskbar import Taskbar
+from obstacle import Obstacle
+from group import Group
 from mutagen.wave import WAVE
 import time
 def song_length(song_path):
@@ -47,8 +47,7 @@ class Controller:
     self.obstacle_group=Group()
 
     self.taskbar_group=Group()# image size should be < 686x52px 
-    
-    
+    self.Ending=True
     self.aim=0
     self.main_aim=0
     self.aim2=0
@@ -106,8 +105,6 @@ class Controller:
     "dreamy":"final-project-team-hagil/assets/taskbar/redsky+dreamy.png",
     "sunset":"final-project-team-hagil/assets/taskbar/sunset.png",
 }   
-    
-    
     self.SCREEN_WIDTH = 720
     self.SCREEN_HEIGHT = 1080
     self.SCREEN_SIZE = (self.SCREEN_HEIGHT, self.SCREEN_WIDTH)
@@ -129,6 +126,7 @@ class Controller:
         pygame.display.flip()
         pygame.time.wait(60)
         self.gameloop()
+        self.gameoverloop()
     #select state loop
   
   ### below are some sample loop states ###
@@ -162,6 +160,9 @@ class Controller:
     self.screen.blit(self.background,(0,0))
     self.taskbar=Taskbar(self.TASKBAR[self.random_value],540,360)
     self.taskbar_group.add(self.taskbar)
+    for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    self.RUNNING = False
     while self.start:
         for k in self.ICONS:
             self.icon=pygame.image.load(self.ICONS[k])
@@ -189,10 +190,7 @@ class Controller:
         self.screen.blit(self.text,(0,0))
         self.screen.blit(self.text2,(0,50))
         self.OG_key()
-        for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    self.RUNNING = False
-       
+        
             
         self.taskbar_group.draw(self.screen)
         
@@ -303,17 +301,21 @@ class Controller:
             if elapsed_time>self.song_time-5:
                 self.RUNNING=False
                 pygame.display.flip()
+            pygame.display.flip()     
+  def gameoverloop(self):
+        print(self.main_aim-self.aim)
+        self.Ending=True
+        while self.Ending:
+            background=pygame.image.load("final-project-team-hagil/assets/game_over_screen.jpg")
+            scoreboard=pygame.image.load("final-project-team-hagil/assets/scoreboard.jpg")
+            self.screen.blit(background,(0,0))
             pygame.display.flip()
-    print(self.main_aim-self.aim)     
-    
-        
- 
-    
-  #def gameoverloop(self):
-      #event loop
-
-      #update data
-
-      #redraw
+            pygame.time.wait(1000)
+            self.screen.blit(scoreboard,(300,50))
+            pygame.display.flip()
+            pygame.time.wait(10000)
+            for event in pygame.event.get():
+                if event.type==pygame.QUIT:
+                    self.Ending=False
 control=Controller()
 control.mainloop()
