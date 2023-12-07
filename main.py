@@ -1,9 +1,15 @@
-import pygame
-import src.taskbar
 from src.sample_controller import Controller
+from src.submit_bar import Taskbar
+import pygame
+import sys
+
+
+
+
+    
 def main():
-    main=Controller
-    main.mainloop()
+    start=Controller
+    start.mainloop()
     #Create an instance on your controller object
     #Call your mainloop
     

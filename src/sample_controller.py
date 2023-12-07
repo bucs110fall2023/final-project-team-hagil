@@ -1,8 +1,8 @@
 import pygame
 import random
-from submit_bar import Taskbar
-from obstacle import Obstacle
-from group import Group
+from src.submit_bar import Taskbar
+from src.obstacle import Obstacle
+from src.group import Group
 from mutagen.wave import WAVE
 import time
 def song_length(song_path):
