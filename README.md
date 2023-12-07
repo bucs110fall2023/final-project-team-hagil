@@ -34,14 +34,11 @@ computer. In the end, we will compare the players score with the computer to det
 
 ### Features
 
-1. Menu screen where users choose their favorite songs and difficulty 
+1. Main loops where the game start and end depends on users choose: start_screen==>gameloop==>gameoverloop==>start_screen(if the player want to play more) 
 2. Combos of buttons that players have to finish to gain their points 
-3. To get the perfect score, the players have to follow wait the point get to the middle of perfect point 
-of the submit bar
-4. Character will move when player got their combos right and stop when they are wrong 
-5. The computer will always get the combo but they choose random coordinate to hit the submit bar 
-. Therefore their score is not always perfect
-6. Losing menu when player score is lower than the NPC 
+3. Shuffle both background, music and taskbar every time the player start a new game 
+4. Mathematical features calculate the number of combo users have to win for each songs and the time limit before the song ends. 
+5. Losing menu when player miss more than 10 times
 
 ### Classes
 
