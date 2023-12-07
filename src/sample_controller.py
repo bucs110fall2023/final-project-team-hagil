@@ -1,6 +1,6 @@
 import pygame
 import random
-from taskbar import Taskbar
+from submit_bar import Taskbar
 from obstacle import Obstacle
 from group import Group
 from mutagen.wave import WAVE
