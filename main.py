@@ -1,4 +1,4 @@
-from src.sample_controller import Controller
+from src.controller import Controller
 
 
 
