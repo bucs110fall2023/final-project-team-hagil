@@ -124,8 +124,6 @@ class Controller:
       return current_time-start_time
 
 
-
-  
   def OG_key(self):
     """display the key on the screen"""
     self.screen.blit(pygame.image.load(self.OG_KEY["w_key"]),(self.SCREEN_HEIGHT-1000,self.SCREEN_WIDTH-100))
