@@ -9,12 +9,13 @@ from src.group import Group
 from mutagen.wave import WAVE
 
 
-def song_length(song_path): 
+class Controller:
+  def song_length(self,song_path): 
     """get the length of the song, arguement is getting the information of the file then return the length of the song in seconds"""
     audio = WAVE(song_path)
     length = audio.info.length
     return length         
-def choose_random(list_name):
+  def choose_random(self, list_name):
     """choose a random value from a dictionary"""
     selection=[]
     chosen_value=()
@@ -22,7 +23,7 @@ def choose_random(list_name):
         selection.append(k)
     chosen_value=random.choice(selection)
     return chosen_value
-def evaluate_xdistance(obstacle_sequence):
+  def evaluate_xdistance(self, obstacle_sequence):
     """calculate the obstacle placement base on the number of obstacles"""
     if obstacle_sequence==10 or obstacle_sequence==6:
         x=300
@@ -31,7 +32,7 @@ def evaluate_xdistance(obstacle_sequence):
     elif obstacle_sequence==3 or obstacle_sequence==4 or obstacle_sequence==5:
         x=400-(obstacle_sequence-3)*50
     return x
-def evaluate_ydistance(obstacle_sequence):
+  def evaluate_ydistance(self, obstacle_sequence):
     """calculate the distance between obstacles base on the number of obstacles"""
     if obstacle_sequence==10 or obstacle_sequence==6:
         if obstacle_sequence==10:
@@ -43,12 +44,12 @@ def evaluate_ydistance(obstacle_sequence):
     elif obstacle_sequence==3 or obstacle_sequence==4 or obstacle_sequence==5:
         y=110
     return y
-def evaluate_time(start_time,current_time):
-    """calculate the time elapsed"""
-    return current_time-start_time
+  def evaluate_time(self, start_time,current_time):
+      """calculate the time elapsed"""
+      return current_time-start_time
 
 
-class Controller: 
+
   def __init__(self):
     """This contains the variables and dictionary that will be used in the game"""
     
@@ -155,7 +156,7 @@ class Controller:
     """display the start screen"""
     self.run = True
     while self.run:
-        self.main_screen = pygame.image.load("assets/main_screen.jpg")
+        self.main_screen = pygame.image.load("assets/background/main_screen.jpg")
         self.screen.blit(self.main_screen, (0, 0))
         self.start_button.draw(self.screen)
         pygame.display.flip()
@@ -175,14 +176,14 @@ class Controller:
     self.running=True
     self.testing=True
     self.start=True    
-    self.font=pygame.font.Font("assets/Caveat.ttf",49) 
-    self.random_song=choose_random(self.SONG)   
+    self.font=pygame.font.Font("assets/font/Caveat.ttf",49) 
+    self.random_song=self.choose_random(self.SONG)   
     self.music = pygame.mixer.music.load(self.SONG[self.random_song])
-    self.song_time=song_length(self.SONG[self.random_song])
+    self.song_time=self.song_length(self.SONG[self.random_song])
     self.number_of_combos(self.song_time)
     self.base_score=self.correct_ans
     pygame.mixer.music.set_volume(0.2)
-    self.random_value=choose_random(self.BG)
+    self.random_value=self.choose_random(self.BG)
     self.background=pygame.image.load(self.BG[self.random_value])
     self.screen.blit(self.background,(0,0))
     self.taskbar=Taskbar(self.TASKBAR[self.random_value],540,360)
@@ -203,7 +204,7 @@ class Controller:
     pygame.mixer.music.play(-1)
     while self.running:
         self.current_time=time.time()
-        self.elapsed_time=evaluate_time(self.start_time,self.current_time)
+        self.elapsed_time=self.evaluate_time(self.start_time,self.current_time)
         self.OG_key()
         if self.elapsed_time>self.song_time-5:
             self.running=False
@@ -225,9 +226,9 @@ class Controller:
         
         pygame.display.flip()  
         self.obstacle_sequence =random.randrange(3,11)
-        self.x_coord=evaluate_xdistance(self.obstacle_sequence)
+        self.x_coord=self.evaluate_xdistance(self.obstacle_sequence)
         self.y_coord=340
-        self.distance=evaluate_ydistance(self.obstacle_sequence)
+        self.distance=self.evaluate_ydistance(self.obstacle_sequence)
         self.answer=[]
         self.coordinate=[]
         self.key=["state"]
@@ -314,8 +315,8 @@ class Controller:
                         self.incorrect_ans=0  
             self.solving_time=time.time()     
             self.current_time=time.time()
-            elapsed_time=evaluate_time(self.start_time,self.current_time)           
-            if evaluate_time(self.create_time,self.solving_time)>3:
+            elapsed_time=self.evaluate_time(self.start_time,self.current_time)           
+            if self.evaluate_time(self.create_time,self.solving_time)>3:
                 self.correct_ans=self.correct_ans-self.right_ans
                 self.incorrect_ans=self.incorrect_ans+self.wrong_ans
                 if self.incorrect_ans>20:
@@ -333,10 +334,10 @@ class Controller:
   def gameoverloop(self):
         """display the message and score after the game is over"""
         self.ending=True
-        self.home=Obstacle("assets/home.png",0,0)
-        self.reset=Obstacle("assets/reset.png",980,0)
+        self.home=Obstacle("assets/others icons/home.png",0,0)
+        self.reset=Obstacle("assets/others icons/reset.png",980,0)
         self.obstacle_group.empty()
-        self.font=pygame.font.Font("assets/San serif.otf",45)
+        self.font=pygame.font.Font("assets/font/San serif.otf",45)
         self.end_msg= "Target: "+ str(self.base_score)
         self.end_msg2= "Finised combos: " + str(self.base_score-self.correct_ans)
         self.text=self.font.render(self.end_msg,True,"cadetblue")
@@ -344,14 +345,14 @@ class Controller:
         self.end_msg3=" Misses combo: " + str(self.incorrect_ans)
         self.text3=self.font.render(self.end_msg3, True, "cadetblue")
         if self.correct_ans<=0 and self.incorrect_ans<20:
-            self.announcement=pygame.image.load("assets/you win.png")
+            self.announcement=pygame.image.load("assets/others icons/you win.png")
         elif self.incorrect_ans>=20 or self.correct_ans >0:
-            self.announcement=pygame.image.load("assets/you lose.png")
+            self.announcement=pygame.image.load("assets/others icons/you lose.png")
         else:
-            self.announcement=pygame.image.load("assets/you lose.png")
+            self.announcement=pygame.image.load("assets/others icons/you lose.png")
         while self.ending:
             self.screen.fill("plum1")
-            self.screen.blit(pygame.image.load("assets/game_over (1).png"),(self.SCREEN_HEIGHT-750,0))
+            self.screen.blit(pygame.image.load("assets/background/game_over.png"),(self.SCREEN_HEIGHT-750,0))
             self.home_rect=pygame.Rect(0,0,100,90)
             self.reset_rect=pygame.Rect(980,0,100,100)
             self.screen.blit(self.text,(self.SCREEN_HEIGHT-670,self.SCREEN_WIDTH/2-150))
