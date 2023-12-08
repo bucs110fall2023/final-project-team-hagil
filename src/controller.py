@@ -1,6 +1,7 @@
 import pygame
 import random
 import time
+import os
 
 from src.button import Button
 from src.taskbar import Taskbar
@@ -10,46 +11,6 @@ from mutagen.wave import WAVE
 
 
 class Controller:
-  def song_length(self,song_path): 
-    """get the length of the song, arguement is getting the information of the file then return the length of the song in seconds"""
-    audio = WAVE(song_path)
-    length = audio.info.length
-    return length         
-  def choose_random(self, list_name):
-    """choose a random value from a dictionary"""
-    selection=[]
-    chosen_value=()
-    for k in list_name :
-        selection.append(k)
-    chosen_value=random.choice(selection)
-    return chosen_value
-  def evaluate_xdistance(self, obstacle_sequence):
-    """calculate the obstacle placement base on the number of obstacles"""
-    if obstacle_sequence==10 or obstacle_sequence==6:
-        x=300
-    elif obstacle_sequence==7 or obstacle_sequence==8 or obstacle_sequence==9:
-        x=290
-    elif obstacle_sequence==3 or obstacle_sequence==4 or obstacle_sequence==5:
-        x=400-(obstacle_sequence-3)*50
-    return x
-  def evaluate_ydistance(self, obstacle_sequence):
-    """calculate the distance between obstacles base on the number of obstacles"""
-    if obstacle_sequence==10 or obstacle_sequence==6:
-        if obstacle_sequence==10:
-            y=50
-        else:
-            y=90
-    elif obstacle_sequence==7 or obstacle_sequence==8 or obstacle_sequence==9:
-        y=80-(obstacle_sequence-7)*10
-    elif obstacle_sequence==3 or obstacle_sequence==4 or obstacle_sequence==5:
-        y=110
-    return y
-  def evaluate_time(self, start_time,current_time):
-      """calculate the time elapsed"""
-      return current_time-start_time
-
-
-
   def __init__(self):
     """This contains the variables and dictionary that will be used in the game"""
     
@@ -61,7 +22,14 @@ class Controller:
     self.base_score=0
     self.incorrect_ans=0
     self.state="gameloop"
-    self.newkey=["w_key","s_key","a_key","d_key"]    
+    self.newkey=["w_key","s_key","a_key","d_key"]
+    self.high_score=0
+    if os.path.exists("highscore.txt"):
+        with open("highscore.txt","r") as file:
+            self.high_score=int(file.read())
+    else:
+        self.high_score=0
+        
     self.ICONS={
         "#3":"assets/others icons/#3.png",
         "#2":"assets/others icons/#2.png",
@@ -117,6 +85,47 @@ class Controller:
     self.running=True
     self.testing=True
     self.working=True
+  def song_length(self,song_path): 
+    """get the length of the song, arguement is getting the information of the file then return the length of the song in seconds"""
+    audio = WAVE(song_path)
+    length = audio.info.length
+    return length         
+  def choose_random(self, list_name):
+    """choose a random value from a dictionary"""
+    selection=[]
+    chosen_value=()
+    for k in list_name :
+        selection.append(k)
+    chosen_value=random.choice(selection)
+    return chosen_value
+  def evaluate_xdistance(self, obstacle_sequence):
+    """calculate the obstacle placement base on the number of obstacles"""
+    if obstacle_sequence==10 or obstacle_sequence==6:
+        x=300
+    elif obstacle_sequence==7 or obstacle_sequence==8 or obstacle_sequence==9:
+        x=290
+    elif obstacle_sequence==3 or obstacle_sequence==4 or obstacle_sequence==5:
+        x=400-(obstacle_sequence-3)*50
+    return x
+  def evaluate_ydistance(self, obstacle_sequence):
+    """calculate the distance between obstacles base on the number of obstacles"""
+    if obstacle_sequence==10 or obstacle_sequence==6:
+        if obstacle_sequence==10:
+            y=50
+        else:
+            y=90
+    elif obstacle_sequence==7 or obstacle_sequence==8 or obstacle_sequence==9:
+        y=80-(obstacle_sequence-7)*10
+    elif obstacle_sequence==3 or obstacle_sequence==4 or obstacle_sequence==5:
+        y=110
+    return y
+  def evaluate_time(self, start_time,current_time):
+      """calculate the time elapsed"""
+      return current_time-start_time
+
+
+
+  
   def OG_key(self):
     """display the key on the screen"""
     self.screen.blit(pygame.image.load(self.OG_KEY["w_key"]),(self.SCREEN_HEIGHT-1000,self.SCREEN_WIDTH-100))
@@ -169,6 +178,7 @@ class Controller:
                 self.working=False
   def gameloop(self):
     """display the game mechanisms"""
+    self.current_ans=0
     self.correct_ans=0
     self.base_score=0
     self.incorrect_ans=0
@@ -211,14 +221,17 @@ class Controller:
             pygame.mixer_music.stop()
         self.right_ans=0
         self.wrong_ans=0
-        pygame.display.update()             
+        pygame.display.update()
+        self.msg_current_ans="Score:" + str(self.current_ans)             
         self.msg2=str(self.incorrect_ans) + " misses"
         self.msg= str(int(self.correct_ans))+" combos left"
         self.text2=self.font.render(self.msg2,True,"red")
         self.text=self.font.render(self.msg,True,"white")
+        self.text3=self.font.render(self.msg_current_ans,True,"White")
         self.screen.blit(self.background,(0,0))
-        self.screen.blit(self.text,(0,0))
-        self.screen.blit(self.text2,(0,50))
+        self.screen.blit(self.text3,(0,0))
+        self.screen.blit(self.text,(0,50))
+        self.screen.blit(self.text2,(0,100))
         self.OG_key()
         
             
@@ -300,10 +313,12 @@ class Controller:
                             self.key.append("error")
                     pygame.display.flip()
                     if self.key[-1]=="submit":
+                        self.current_ans+=self.right_ans
                         self.correct_ans=self.correct_ans-self.right_ans
                         self.incorrect_ans=self.incorrect_ans+self.wrong_ans
                         self.testing=False
                     elif  self.answer==[]:
+                        self.current_ans+=self.right_ans
                         self.correct_ans=self.correct_ans-self.right_ans
                         self.incorrect_ans=self.incorrect_ans+self.wrong_ans
                         self.testing=False
@@ -317,6 +332,7 @@ class Controller:
             self.current_time=time.time()
             elapsed_time=self.evaluate_time(self.start_time,self.current_time)           
             if self.evaluate_time(self.create_time,self.solving_time)>3:
+                self.current_ans+=self.right_ans
                 self.correct_ans=self.correct_ans-self.right_ans
                 self.incorrect_ans=self.incorrect_ans+self.wrong_ans
                 if self.incorrect_ans>20:
@@ -338,11 +354,17 @@ class Controller:
         self.reset=Obstacle("assets/others icons/reset.png",980,0)
         self.obstacle_group.empty()
         self.font=pygame.font.Font("assets/font/San serif.otf",45)
+        if self.current_ans>self.high_score:
+            self.high_score=self.current_ans
+            with open("highscore.txt","w") as file:
+                file.write(str(self.high_score))
+        self.end_msg_hg="Your highest score is " + str(self.high_score)
         self.end_msg= "Target: "+ str(self.base_score)
-        self.end_msg2= "Finised combos: " + str(self.base_score-self.correct_ans)
+        self.end_msg2= "Current score: " + str(self.base_score-self.correct_ans)
+        self.end_msg3=" Misses combo: " + str(self.incorrect_ans)
+        self.text_hg=self.font.render(self.end_msg_hg, True,"cadetblue")
         self.text=self.font.render(self.end_msg,True,"cadetblue")
         self.text2=self.font.render(self.end_msg2, True, "cadetblue")
-        self.end_msg3=" Misses combo: " + str(self.incorrect_ans)
         self.text3=self.font.render(self.end_msg3, True, "cadetblue")
         if self.correct_ans<=0 and self.incorrect_ans<20:
             self.announcement=pygame.image.load("assets/others icons/you win.png")
@@ -355,11 +377,12 @@ class Controller:
             self.screen.blit(pygame.image.load("assets/background/game_over.png"),(self.SCREEN_HEIGHT-750,0))
             self.home_rect=pygame.Rect(0,0,100,90)
             self.reset_rect=pygame.Rect(980,0,100,100)
-            self.screen.blit(self.text,(self.SCREEN_HEIGHT-670,self.SCREEN_WIDTH/2-150))
-            self.screen.blit(self.text2,(self.SCREEN_HEIGHT-740,self.SCREEN_WIDTH/2-100))
+            self.screen.blit(self.text_hg,(self.SCREEN_HEIGHT-780,self.SCREEN_WIDTH/2-150))
+            self.screen.blit(self.text,(self.SCREEN_HEIGHT-670,self.SCREEN_WIDTH/2-100))
+            self.screen.blit(self.text2,(self.SCREEN_HEIGHT-740,self.SCREEN_WIDTH/2-50))
             if self.incorrect_ans>20 or self.correct_ans>0:
-                self.screen.blit(self.text3,(self.SCREEN_HEIGHT-720,self.SCREEN_WIDTH/2-50))
-            self.screen.blit(self.announcement,(self.SCREEN_HEIGHT-850,self.SCREEN_WIDTH/2))
+                self.screen.blit(self.text3,(self.SCREEN_HEIGHT-720,self.SCREEN_WIDTH/2))
+            self.screen.blit(self.announcement,(self.SCREEN_HEIGHT-850,self.SCREEN_WIDTH/2+50))
             self.obstacle_group.add(self.home)
             self.obstacle_group.draw(self.screen)
             self.obstacle_group.add(self.reset)
