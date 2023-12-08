@@ -310,10 +310,10 @@ class Controller:
                         self.Testing=False
                     if self.aim2>20:
                         self.RUNNING=False
+                        pygame.mixer_music.stop()  
                     elif self.aim<=0:
                         self.aim=0
-                        self.aim2=0
-                    pygame.mixer_music.stop()    
+                        self.aim2=0  
             self.solving_time=time.time()     
             self.current_time=time.time()
             elapsed_time=evaluate_time(self.start_time,self.current_time)           
