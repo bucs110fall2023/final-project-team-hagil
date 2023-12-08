@@ -57,53 +57,53 @@ class Controller:
     self.state="gameloop"
     self.newkey=["w_key","s_key","a_key","d_key"]    
     self.ICONS={
-        "#3":"final-project-team-hagil/assets/others icons/#3.png",
-        "#2":"final-project-team-hagil/assets/others icons/#2.png",
-        "#1":"final-project-team-hagil/assets/others icons/#1.png",
-        "go":"final-project-team-hagil/assets/others icons/go.png",
+        "#3":"assets/others icons/#3.png",
+        "#2":"assets/others icons/#2.png",
+        "#1":"assets/others icons/#1.png",
+        "go":"assets/others icons/go.png",
     }
     self.SONG={
-    "Careless":"final-project-team-hagil/assets/musics/careless.wav",
-    "Cross me":"final-project-team-hagil/assets/musics/Cross me.wav",
-    "I don't care":"final-project-team-hagil/assets/musics/I don't care.wav",
-    "Shake it off":"final-project-team-hagil/assets/musics/Shake it off.wav",
-    "You belong with me":"final-project-team-hagil/assets/musics/You belong with me.wav",
-    "greater than one":"final-project-team-hagil/assets/musics/greater than one.wav",
+    "Careless":"assets/musics/careless.wav",
+    "Cross me":"assets/musics/Cross me.wav",
+    "I don't care":"assets/musics/I don't care.wav",
+    "Shake it off":"assets/musics/Shake it off.wav",
+    "You belong with me":"assets/musics/You belong with me.wav",
+    "greater than one":"assets/musics/greater than one.wav",
     }
     self.OG_KEY={
-    "w_key":"final-project-team-hagil/assets/keyboard/w key.png",
-    "s_key":"final-project-team-hagil/assets/keyboard/s key.png",
-    "a_key":"final-project-team-hagil/assets/keyboard/a key.png",
-    "d_key":"final-project-team-hagil/assets/keyboard/d key.png",
-    "space_key":"final-project-team-hagil/assets/keyboard/space key.png"
+    "w_key":"assets/keyboard/w key.png",
+    "s_key":"assets/keyboard/s key.png",
+    "a_key":"assets/keyboard/a key.png",
+    "d_key":"assets/keyboard/d key.png",
+    "space_key":"assets/keyboard/space key.png"
 }
     self.Al_KEY={
-    "w_key":"final-project-team-hagil/assets/keyboard/w key(after).png",
-    "s_key":"final-project-team-hagil/assets/keyboard/s key(after).png",
-    "a_key":"final-project-team-hagil/assets/keyboard/a key(after).png",
-    "d_key":"final-project-team-hagil/assets/keyboard/d key(after).png",
-    "space_key":"final-project-team-hagil/assets/keyboard/space key(after).png"
+    "w_key":"assets/keyboard/w key(after).png",
+    "s_key":"assets/keyboard/s key(after).png",
+    "a_key":"assets/keyboard/a key(after).png",
+    "d_key":"assets/keyboard/d key(after).png",
+    "space_key":"assets/keyboard/space key(after).png"
     
 }
     self.FALSE_KEY={
-    "w_key":"final-project-team-hagil/assets/keyboard/w key(wrong).png",
-    "s_key":"final-project-team-hagil/assets/keyboard/s key(wrong).png",
-    "a_key":"final-project-team-hagil/assets/keyboard/a key(wrong).png",
-    "d_key":"final-project-team-hagil/assets/keyboard/d key(wrong).png"
+    "w_key":"assets/keyboard/w key(wrong).png",
+    "s_key":"assets/keyboard/s key(wrong).png",
+    "a_key":"assets/keyboard/a key(wrong).png",
+    "d_key":"assets/keyboard/d key(wrong).png"
 }    
     self.BG={
-    "dreamy":"final-project-team-hagil/assets/background/dreamy.png",
-    "mountain":"final-project-team-hagil/assets/background/mountain.png",
-    "nightsky":"final-project-team-hagil/assets/background/nightsky.png",
-    "redsky":"final-project-team-hagil/assets/background/redsky.png",
-    "sunset":"final-project-team-hagil/assets/background/sunset.png"
+    "dreamy":"assets/background/dreamy.png",
+    "mountain":"assets/background/mountain.png",
+    "nightsky":"assets/background/nightsky.png",
+    "redsky":"assets/background/redsky.png",
+    "sunset":"assets/background/sunset.png"
 }
     self.TASKBAR={
-    "mountain":"final-project-team-hagil/assets/taskbar/mountain.png",
-    "nightsky":"final-project-team-hagil/assets/taskbar/nightsky.png",
-    "redsky":"final-project-team-hagil/assets/taskbar/redsky+dreamy.png",
-    "dreamy":"final-project-team-hagil/assets/taskbar/redsky+dreamy.png",
-    "sunset":"final-project-team-hagil/assets/taskbar/sunset.png",
+    "mountain":"assets/taskbar/mountain.png",
+    "nightsky":"assets/taskbar/nightsky.png",
+    "redsky":"assets/taskbar/redsky+dreamy.png",
+    "dreamy":"assets/taskbar/redsky+dreamy.png",
+    "sunset":"assets/taskbar/sunset.png",
 }   
     self.SCREEN_WIDTH = 720
     self.SCREEN_HEIGHT = 1080
@@ -122,7 +122,7 @@ class Controller:
   def mainloop(self):
         pygame.init()
         self.screen=pygame.display.set_mode([self.SCREEN_HEIGHT,self.SCREEN_WIDTH])
-        self.start_img=pygame.image.load("final-project-team-hagil/assets/others icons/start.png").convert_alpha()
+        self.start_img=pygame.image.load("assets/others icons/start.png").convert_alpha()
         self.start_button=Button(415,500,self.start_img,0.2)
         self.state="mainscreen"
         while self.working:
@@ -150,8 +150,8 @@ class Controller:
   def start_screen(self):
     self.run = True
     while self.run:
-        self.main_menu = pygame.image.load("final-project-team-hagil/assets/main_menu.png")
-        self.main_screen = pygame.image.load("final-project-team-hagil/assets/main_screen.jpg")
+        self.main_menu = pygame.image.load("assets/main_menu.png")
+        self.main_screen = pygame.image.load("assets/main_screen.jpg")
         self.screen.blit(self.main_screen, (0, 0))
         self.start_button.draw(self.screen)
         pygame.display.flip()
@@ -172,7 +172,7 @@ class Controller:
     self.RUNNING=True
     self.Testing=True
     self.start=True    
-    self.font=pygame.font.Font("final-project-team-hagil/assets/Caveat.ttf",49) 
+    self.font=pygame.font.Font("assets/Caveat.ttf",49) 
     self.random_song=choose_random(self.SONG)   
     self.music = pygame.mixer.music.load(self.SONG[self.random_song])
     self.song_time=song_length(self.SONG[self.random_song])
@@ -311,14 +311,14 @@ class Controller:
                     if self.key[-1]=="submit":
                         self.aim=self.aim-self.right_ans
                         self.aim2=self.aim2+self.wrong_ans
-                        if self.aim2>10:
+                        if self.aim2>20:
                             self.RUNNING=False
                             pygame.mixer_music.stop()
                         self.Testing=False
                     elif  self.answer==[]:
                         self.aim=self.aim-self.right_ans
                         self.aim2=self.aim2+self.wrong_ans
-                        if self.aim2>10:
+                        if self.aim2>20:
                             self.RUNNING=False
                             pygame.mixer_music.stop()
                         pygame.time.wait(20)
@@ -327,7 +327,7 @@ class Controller:
             if evaluate_time(self.create_time,self.solving_time)>3:
                 self.aim=self.aim-self.right_ans
                 self.aim2=self.aim2+self.wrong_ans
-                if self.aim2>10:
+                if self.aim2>20:
                     self.key=[]
                     self.RUNNINaG=False
                     pygame.time.wait(20) 
@@ -346,10 +346,10 @@ class Controller:
   def gameoverloop(self):
         print(self.main_aim-self.aim)
         self.Ending=True
-        self.home=Obstacle("final-project-team-hagil/assets/home.png",0,0)
-        self.reset=Obstacle("final-project-team-hagil/assets/reset.png",980,0)
+        self.home=Obstacle("assets/home.png",0,0)
+        self.reset=Obstacle("assets/reset.png",980,0)
         self.obstacle_group.empty()
-        self.font=pygame.font.Font("final-project-team-hagil/assets/San serif.otf",45)
+        self.font=pygame.font.Font("assets/San serif.otf",45)
         self.end_msg= "Target: "+ str(self.main_aim)
         self.end_msg2= "Finised combos: " + str(self.main_aim-self.aim)
         self.end_msg3=" Misses combo: " + str(self.aim2)
@@ -358,16 +358,16 @@ class Controller:
         self.text3=self.font.render(self.end_msg3, True, "cadetblue")
         
         if self.aim<=0:
-            self.announcement=pygame.image.load("final-project-team-hagil/assets/you win.png")
+            self.announcement=pygame.image.load("assets/you win.png")
         elif self.aim>=10:
-            self.announcement=pygame.image.load("final-project-team-hagil/assets/you lose.png")
+            self.announcement=pygame.image.load("assets/you lose.png")
         elif self.aim2>0 or self.aim >0:
-            self.announcement=pygame.image.load("final-project-team-hagil/assets/you lose.png")
+            self.announcement=pygame.image.load("assets/you lose.png")
         else:
-            self.announcement=pygame.image.load("final-project-team-hagil/assets/you lose.png")
+            self.announcement=pygame.image.load("assets/you lose.png")
         while self.Ending:
             self.screen.fill("plum1")
-            self.screen.blit(pygame.image.load("final-project-team-hagil/assets/game_over (1).png"),(self.SCREEN_HEIGHT-750,0))
+            self.screen.blit(pygame.image.load("assets/game_over (1).png"),(self.SCREEN_HEIGHT-750,0))
             self.home_rect=pygame.Rect(0,0,100,90)
             self.reset_rect=pygame.Rect(980,0,100,100)
             self.screen.blit(self.text,(self.SCREEN_HEIGHT-670,self.SCREEN_WIDTH/2-150))
