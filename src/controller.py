@@ -112,8 +112,6 @@ class Controller:
     self.Testing=True
     self.working=True
   def OG_key(self):
-      
-    
     self.screen.blit(pygame.image.load(self.OG_KEY["w_key"]),(self.SCREEN_HEIGHT-1000,self.SCREEN_WIDTH-100))
     self.screen.blit(pygame.image.load(self.OG_KEY["s_key"]),(self.SCREEN_HEIGHT-1000,self.SCREEN_WIDTH-55))
     self.screen.blit(pygame.image.load(self.OG_KEY["a_key"]),(self.SCREEN_HEIGHT-1050,self.SCREEN_WIDTH-55))
@@ -150,7 +148,6 @@ class Controller:
   def start_screen(self):
     self.run = True
     while self.run:
-        self.main_menu = pygame.image.load("assets/main_menu.png")
         self.main_screen = pygame.image.load("assets/main_screen.jpg")
         self.screen.blit(self.main_screen, (0, 0))
         self.start_button.draw(self.screen)
@@ -241,14 +238,9 @@ class Controller:
         for i in range(self.obstacle_sequence):
             generatekey=(random.choice(self.newkey))
             self.answer.append(generatekey)
-                
             self.obstacle=Obstacle(self.OG_KEY[generatekey],self.x_coord,self.y_coord)
             self.coordinate.append(self.x_coord)
-                
             self.obstacle_group.add(self.obstacle)
-                
-                
-
             pygame.time.wait(50)
             pygame.display.update()
             self.x_coord+=self.distance
@@ -256,19 +248,17 @@ class Controller:
         self.obstacle_group.empty()    
         pygame.display.update()
         self.create_time=time.time() 
-        
         self.Testing=True
-    
+        for event in pygame.event.get():
+            if event.type==pygame.QUIT:
+                self.working=False
         while self.Testing:
             
             self.OG_key()
-            
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
-                    
-                    #stop_thread.is_set()
-                    self.RUNNING = False
                     self.Testing=False
+                    self.RUNNING = False
                     self.working=False
                 elif event.type==pygame.KEYDOWN:
                     if event.key==pygame.K_w:
@@ -299,7 +289,7 @@ class Controller:
                     elif self.key[-1]!=self.answer[0]:   
                         if self.key[-1]=="submit":
                             self.Testing=False     
-                        else:
+                        elif self.key[-1]=="w_key" or self.key[-1]=="a_key" or self.key[-1]=="s_key" or self.key[-1]=="d_key":
                             self.obstacle.update(self.FALSE_KEY[self.answer[0]],self.coordinate[self.z],self.y_coord)
                             self.wrong_ans+=1
                             self.obstacle_group.add(self.obstacle)
@@ -307,37 +297,35 @@ class Controller:
                             self.z+=1
                             self.answer.pop(0)
                             self.obstacle_group.empty()
+                        else:
+                            self.key.append("error")
                     pygame.display.flip()
                     if self.key[-1]=="submit":
                         self.aim=self.aim-self.right_ans
                         self.aim2=self.aim2+self.wrong_ans
-                        if self.aim2>20:
-                            self.RUNNING=False
-                            pygame.mixer_music.stop()
                         self.Testing=False
                     elif  self.answer==[]:
                         self.aim=self.aim-self.right_ans
                         self.aim2=self.aim2+self.wrong_ans
-                        if self.aim2>20:
-                            self.RUNNING=False
-                            pygame.mixer_music.stop()
-                        pygame.time.wait(20)
-                        self.Testing=False    
-            self.solving_time=time.time()                
-            if evaluate_time(self.create_time,self.solving_time)>3:
+                        self.Testing=False
+                    if self.aim2>20:
+                        self.RUNNING=False
+                    elif self.aim<=0:
+                        self.aim=0
+                        self.aim2=0
+                    pygame.mixer_music.stop()    
+            self.solving_time=time.time()     
+            self.current_time=time.time()
+            elapsed_time=evaluate_time(self.start_time,self.current_time)           
+            if evaluate_time(self.create_time,self.solving_time)>2:
                 self.aim=self.aim-self.right_ans
                 self.aim2=self.aim2+self.wrong_ans
                 if self.aim2>20:
-                    self.key=[]
                     self.RUNNINaG=False
                     pygame.time.wait(20) 
                 self.Testing=False
                 self.obstacle_group.empty()
-            self.current_time=time.time()
-            elapsed_time=evaluate_time(self.start_time,self.current_time)
-            if self.aim<=0:
-                self.aim2=0
-            if elapsed_time>self.song_time-5:
+            elif elapsed_time>self.song_time-5:
                 self.RUNNING=False
                 pygame.mixer_music.stop()
                 pygame.display.flip()
@@ -356,12 +344,9 @@ class Controller:
         self.text=self.font.render(self.end_msg,True,"cadetblue")
         self.text2=self.font.render(self.end_msg2, True, "cadetblue")
         self.text3=self.font.render(self.end_msg3, True, "cadetblue")
-        
-        if self.aim<=0:
+        if self.aim<=0 and self.aim2<20:
             self.announcement=pygame.image.load("assets/you win.png")
-        elif self.aim>=10:
-            self.announcement=pygame.image.load("assets/you lose.png")
-        elif self.aim2>0 or self.aim >0:
+        elif self.aim2>=20 or self.aim >0:
             self.announcement=pygame.image.load("assets/you lose.png")
         else:
             self.announcement=pygame.image.load("assets/you lose.png")
