@@ -27,7 +27,8 @@ We have made a rhythm game which the player win by completing a assigned combo u
 ### Final Design
 
 ![final gui](assets/final_gui1.jpeg)
-![final gui](assets.final_gui2.jpeg)
+
+![final gui](assets/final_gui2.jpeg)
 
 ## Program Design
 
