@@ -37,7 +37,7 @@ We have made a rhythm game which the player win by completing a assigned combo u
 2. Combos of buttons that players have to finish to gain their points
 3. Shuffle both background, music and taskbar every time the player start a new game
 4. Mathematical features calculate the number of combo users have to win for each songs and the time limit before the song ends.
-5. Displaying highest score (used an external file)that changes real time.
+5. Displaying highest score (used an external file) that changes real time.
 6. Losing menu when player miss more than 20 times
 
 ### Classes
